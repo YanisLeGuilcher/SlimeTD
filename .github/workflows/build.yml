@@ -15,7 +15,7 @@ on:
           - WebGL
 
 permissions:
-  contents: write  # Autoriser la création de Releases
+  contents: write
 
 jobs:
   build:
