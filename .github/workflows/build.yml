@@ -1,0 +1,53 @@
+name: Build Unity Project
+
+on:
+  workflow_dispatch:
+    inputs:
+      targetPlatform:
+        description: 'Plateforme du build'
+        required: true
+        default: 'StandaloneWindows64'
+        type: choice
+        options:
+          - StandaloneWindows64
+          - StandaloneLinux64
+          - Android
+          - WebGL
+
+jobs:
+  build:
+    name: Build Unity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            Library-${{ runner.os }}-
+
+      - name: Build Unity
+        uses: game-ci/unity-builder@v3
+        with:
+          unityVersion: 2022.3.5f1
+          targetPlatform: ${{ github.event.inputs.targetPlatform }}
+          projectPath: ./
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build-${{ github.event.inputs.targetPlatform }}
+          path: build/${{ github.event.inputs.targetPlatform }}
+          - name: Publish Build to GitHub Releases
+          uses: softprops/action-gh-release@v2
+          with:
+            tag_name: latest-build
+            release_name: Latest Build
+            draft: false
+            prerelease: false
+            files: build/${{ github.event.inputs.targetPlatform }}/*
+  
