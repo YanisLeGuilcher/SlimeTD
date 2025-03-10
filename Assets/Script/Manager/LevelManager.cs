@@ -3,15 +3,19 @@ using Script.Entities.Monster;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Script.Manager
 {
     public class LevelManager : MonoBehaviour
     {
-        [Header("Player Detail")]
+        [Header("UI")]
         [SerializeField] private TMP_Text waveCount;
         [SerializeField] private TMP_Text lifePoint;
         [SerializeField] private TMP_Text money;
+        [SerializeField] private GameObject pausePanel;
+        
         [Header("Scripts")]
         [SerializeField] private MonsterGenerator monsterGenerator;
         
@@ -25,15 +29,18 @@ namespace Script.Manager
         [SerializeField] private LayerMask layerBlock;
 
 
-        private int _currentLifePoint = 100;
-        private int _currentMoney = 100;
-        private int _currentWaveCount = 1;
+        [SerializeField] private PlayerInput input;
+
+        private int currentLifePoint = 100;
+        private int currentMoney = 100;
+        private int currentWaveCount = 1;
 
         public int Speed { get; private set; } = 1;
+        private int cacheSpeed = 1;
 
         public static LevelManager Instance;
 
-        private Camera _mainCamera;
+        private Camera mainCamera;
 
         private void Awake()
         {
@@ -45,9 +52,9 @@ namespace Script.Manager
             }
 
             Instance = this;
-            lifePoint.text = _currentLifePoint.ToString();
-            money.text = _currentMoney.ToString();
-            waveCount.text = _currentWaveCount.ToString();
+            lifePoint.text = currentLifePoint.ToString();
+            money.text = currentMoney.ToString();
+            waveCount.text = currentWaveCount.ToString();
             
             monsterGenerator.OnMonsterDie.AddListener(MonsterDie);
             monsterGenerator.OnMonsterFinish.AddListener(MonsterFinish);
@@ -56,8 +63,8 @@ namespace Script.Manager
 
         private void Start()
         {
-            _mainCamera = Camera.main;
-            if(_mainCamera == null)
+            mainCamera = Camera.main;
+            if(mainCamera == null)
                 Debug.LogWarning("No camera found");
         }
 
@@ -70,7 +77,7 @@ namespace Script.Manager
                 if (EventSystem.current.IsPointerOverGameObject())
                     return;
                 
-                Vector3 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, layerBlock);
 
                 if (layerAllow.Contains(hit.collider.gameObject.layer))
@@ -78,7 +85,7 @@ namespace Script.Manager
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(
                         transform as RectTransform,
                         Input.mousePosition,
-                        _mainCamera,
+                        mainCamera,
                         out var localPoint
                     );
                     GiveChoiceOfPlacement(localPoint);
@@ -118,23 +125,58 @@ namespace Script.Manager
 
         private void MonsterDie(Monster monster)
         {
-            _currentMoney += monster.Money;
-            money.text = _currentMoney.ToString();
+            currentMoney += monster.Money;
+            money.text = currentMoney.ToString();
         }
         
         private void MonsterFinish(Monster monster)
         {
-            _currentLifePoint -= monster.Damage;
-            lifePoint.text = _currentLifePoint.ToString();
+            currentLifePoint -= monster.Damage;
+            if (currentLifePoint <= 0)
+            {
+                currentLifePoint = 0;
+                pausePanel.SetActive(true);
+                startWave.SetActive(false);
+                selectSpeed.SetActive(false);
+            }
+            lifePoint.text = currentLifePoint.ToString();
         }
         
         private void WaveFinish()
         {
-            _currentWaveCount++;
-            waveCount.text = _currentWaveCount.ToString();
+            currentWaveCount++;
+            waveCount.text = currentWaveCount.ToString();
             
             startWave.SetActive(true);
             selectSpeed.SetActive(false);
+        }
+
+        public void ResumeGame() => ResumeGame(Speed == 0);
+        
+        public void ResumeGame(bool enable)
+        {
+            if (enable)
+            {
+                Speed = cacheSpeed;
+                pausePanel.SetActive(false);
+            }
+            else
+            {
+                cacheSpeed = Speed;
+                Speed = 0;
+                pausePanel.SetActive(true);
+            }
+        }
+        
+        public void Retry()
+        {
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
+        public void GoToMainMenu()
+        {
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
