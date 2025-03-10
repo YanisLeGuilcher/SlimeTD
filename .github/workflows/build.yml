@@ -42,12 +42,13 @@ jobs:
         with:
           name: Build-${{ github.event.inputs.targetPlatform }}
           path: build/${{ github.event.inputs.targetPlatform }}
-          - name: Publish Build to GitHub Releases
-          uses: softprops/action-gh-release@v2
-          with:
-            tag_name: latest-build
-            release_name: Latest Build
-            draft: false
-            prerelease: false
-            files: build/${{ github.event.inputs.targetPlatform }}/*
+      
+      - name: Publish Build to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-build
+          release_name: Latest Build
+          draft: false
+          prerelease: false
+          files: build/${{ github.event.inputs.targetPlatform }}/*
   
