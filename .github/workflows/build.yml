@@ -14,6 +14,9 @@ on:
           - Android
           - WebGL
 
+permissions:
+  contents: write  # Autoriser la création de Releases
+
 jobs:
   build:
     name: Build Unity
@@ -41,8 +44,16 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Build-${{ github.event.inputs.targetPlatform }}
-          path: build/${{ github.event.inputs.targetPlatform }}
-      
+          path: Build/${{ github.event.inputs.targetPlatform }}
+
+      - name: Delete existing tag
+        run: |
+          git fetch --tags
+          if git rev-parse latest-build >/dev/null 2>&1; then
+            git push --delete origin latest-build || true
+            git tag -d latest-build || true
+          fi
+
       - name: Publish Build to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
@@ -50,5 +61,4 @@ jobs:
           release_name: Latest Build
           draft: false
           prerelease: false
-          files: build/${{ github.event.inputs.targetPlatform }}/*
-  
+          files: Build/${{ github.event.inputs.targetPlatform }}/*
