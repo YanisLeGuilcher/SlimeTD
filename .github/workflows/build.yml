@@ -41,7 +41,7 @@ jobs:
           projectPath: ./
 
       - name: Upload Build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Build-${{ github.event.inputs.targetPlatform }}
           path: Build/${{ github.event.inputs.targetPlatform }}
