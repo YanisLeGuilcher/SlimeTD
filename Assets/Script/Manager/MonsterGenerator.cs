@@ -69,7 +69,7 @@ namespace Script.Manager
                     while (tmpWait >= 0)
                     {
                         yield return null;
-                        tmpWait -= Time.deltaTime * LevelManager.Instance.Speed;
+                        tmpWait -= LevelManager.DeltaTime;
                     }
                     var chosenSpline = trajectories[round % trajectories.Count];
                     var go = LeanPool.Spawn(monster.Key, chosenSpline.EvaluatePosition(0), Quaternion.identity);

@@ -37,7 +37,11 @@ namespace Script.Manager
         private int currentMoney = 400;
         private int currentWaveCount = 1;
 
-        public int Speed { get; private set; } = 1;
+        
+        public bool Paused { get; private set; }
+
+        public int Speed => Paused ? 0 : cacheSpeed;
+        public static float DeltaTime => Instance.Speed * Time.deltaTime;
         private int cacheSpeed = 1;
 
         public static LevelManager Instance;
@@ -141,7 +145,7 @@ namespace Script.Manager
             waveProcessing = true;
         }
 
-        public void SetSpeed(int amount) => Speed = amount;
+        public void SetSpeed(int amount) => cacheSpeed = amount;
 
 
         private void MonsterDie(Monster monster)
@@ -183,13 +187,13 @@ namespace Script.Manager
         {
             if (enable)
             {
-                Speed = cacheSpeed;
+                Paused = false;
                 pausePanel.SetActive(false);
             }
             else
             {
                 cacheSpeed = Speed;
-                Speed = 0;
+                Paused = true;
                 pausePanel.SetActive(true);
             }
         }

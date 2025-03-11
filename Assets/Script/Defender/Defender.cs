@@ -29,6 +29,7 @@ namespace Script.Defender
 
         private Monster target;
 
+
         private void Awake()
         {
             rangeCollider.gameObject.layer = LayerMask.NameToLayer("TowerRange");
@@ -42,7 +43,7 @@ namespace Script.Defender
 
         private void Update()
         {
-            reload -= Time.deltaTime * LevelManager.Instance.Speed;
+            reload -= LevelManager.DeltaTime;
             
             if (!target)
                 return;
@@ -111,7 +112,7 @@ namespace Script.Defender
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * LevelManager.Instance.Speed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * LevelManager.DeltaTime);
         }
 
         private Monster SearchTarget()
