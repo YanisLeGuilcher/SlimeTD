@@ -15,7 +15,7 @@ on:
           - WebGL
 
 permissions:
-  contents: write
+  contents: write  # Autoriser la création de Releases
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
           projectPath: ./
 
       - name: Upload Build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Build-${{ github.event.inputs.targetPlatform }}
           path: Build/${{ github.event.inputs.targetPlatform }}
@@ -58,7 +58,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest-build
-          release_name: Latest Build
+          release_name: Slime Tower Defense
           draft: false
           prerelease: false
           files: Build/${{ github.event.inputs.targetPlatform }}/*
