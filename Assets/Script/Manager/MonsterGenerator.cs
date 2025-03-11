@@ -76,7 +76,6 @@ namespace Script.Manager
                     var script = go.GetComponent<Monster>();
                     script.SetSpline(chosenSpline);
                     AddMonster(script);
-                    currentMonsters.Add(script);
                     round++;
                 }
             }
@@ -88,6 +87,7 @@ namespace Script.Manager
         {
             monster.Die.AddListener(() => MonsterDie(monster));
             monster.Finish.AddListener(() => MonsterFinish(monster));
+            currentMonsters.Add(monster);
         }
         
         private void MonsterDie(Monster monster)

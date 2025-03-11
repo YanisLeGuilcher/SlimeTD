@@ -34,7 +34,7 @@ namespace Script.Manager
         [SerializeField] private PlayerInput input;
 
         private int currentLifePoint = 100;
-        private int currentMoney = 100;
+        private int currentMoney = 400;
         private int currentWaveCount = 1;
 
         public int Speed { get; private set; } = 1;
@@ -108,6 +108,13 @@ namespace Script.Manager
 
         public void SpawnTower(TowerType type, Vector3 position)
         {
+            int price = DataSerializer.GetPriceOfTower(type);
+            if(currentMoney < price)
+                return;
+            
+            currentMoney -= price;
+            money.text = currentMoney.ToString();
+            
             Instantiate(PrefabFactory.Instance[type], position, Quaternion.identity);
             placementChoice.gameObject.SetActive(false);
         }

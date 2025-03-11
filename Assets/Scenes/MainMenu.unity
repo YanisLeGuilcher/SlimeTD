@@ -612,6 +612,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 11400000, guid: 75a761bc30cb87a448eda500ebab0c4c, type: 2}
+  towerPrice:
+  - first: 0
+    second: 300
+  - first: 1
+    second: 200
+  - first: 2
+    second: 200
 --- !u!1 &390326103
 GameObject:
   m_ObjectHideFlags: 0

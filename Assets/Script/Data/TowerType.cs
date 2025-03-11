@@ -2,7 +2,9 @@ namespace Script.Data
 {
     public enum TowerType
     {
-        Defender,
+        Base,
+        Burst,
+        Rocket
     }
 }
 
