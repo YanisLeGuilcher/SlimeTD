@@ -16,19 +16,17 @@ namespace Script.Manager
         [SerializeField,Tooltip("First is the prefab of monster\nSecond is the min wave he can spawn\nThird is the amount of it in one wave")] 
         private List<Script.Data.Tuple<GameObject,int,float>> monsters = new();
         [SerializeField] private float timeBetweenEnemy = 1;
-        [SerializeField] private float moneyEarnByWave = 100;
-        [SerializeField] private float moneyEarnByWaveFactor = 1.01f;
         [SerializeField] private List<SplineContainer> trajectories = new();
 
         #endregion
 
         #region Private
 
-        private int _currentWave = 1;
+        private int currentWave = 1;
 
-        private readonly List<Monster> _currentMonsters = new();
+        private readonly List<Monster> currentMonsters = new();
 
-        private Coroutine _spawningMonster;
+        private Coroutine spawningMonster;
 
         #endregion
 
@@ -51,15 +49,15 @@ namespace Script.Manager
                 Instance = null;
         }
 
-        public void StartWave() => _spawningMonster = StartCoroutine(RtnStartWave());
+        public void StartWave() => spawningMonster = StartCoroutine(RtnStartWave());
 
         private IEnumerator RtnStartWave()
         {
-            _currentMonsters.Clear();
+            currentMonsters.Clear();
             Dictionary<GameObject, int> monstersAmount = new();
             foreach (var monsterStats in monsters)
-                if(_currentWave >= monsterStats.second)
-                    monstersAmount.Add(monsterStats.first, Math.Max(1, (int)(monsterStats.third * _currentWave)));
+                if(currentWave >= monsterStats.second)
+                    monstersAmount.Add(monsterStats.first, Math.Max(1, (int)(monsterStats.third * currentWave)));
 
             
             foreach (var monster in monstersAmount)
@@ -77,17 +75,13 @@ namespace Script.Manager
                     var go = LeanPool.Spawn(monster.Key, chosenSpline.EvaluatePosition(0), Quaternion.identity);
                     var script = go.GetComponent<Monster>();
                     script.SetSpline(chosenSpline);
-                    script.Die.AddListener(() => MonsterDie(script));
-                    script.Finish.AddListener(() => MonsterFinish(script));
-                    _currentMonsters.Add(script);
+                    AddMonster(script);
+                    currentMonsters.Add(script);
                     round++;
-                    
-                    
                 }
             }
-
-            _spawningMonster = null;
-            _currentWave++;
+            spawningMonster = null;
+            currentWave++;
         }
 
         public void AddMonster(Monster monster)
@@ -99,18 +93,18 @@ namespace Script.Manager
         private void MonsterDie(Monster monster)
         {
             OnMonsterDie.Invoke(monster);
-            _currentMonsters.Remove(monster);
+            currentMonsters.Remove(monster);
             LeanPool.Despawn(monster, monster.DeathAnimationTime);
-            if(_currentMonsters.Count == 0 && _spawningMonster == null)
+            if(currentMonsters.Count == 0 && spawningMonster == null)
                 OnWaveFinish.Invoke();
         }
 
         private void MonsterFinish(Monster monster)
         {
-            _currentMonsters.Remove(monster);
+            currentMonsters.Remove(monster);
             OnMonsterFinish.Invoke(monster);
             LeanPool.Despawn(monster);
-            if(_currentMonsters.Count == 0 && _spawningMonster == null)
+            if(currentMonsters.Count == 0 && spawningMonster == null)
                 OnWaveFinish.Invoke();
         }
     

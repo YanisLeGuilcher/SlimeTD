@@ -32,8 +32,8 @@ namespace Script.Entities.Monster
         public int Rank => rank;
         public int Damage => damageOnPass;
         public int Money => moneyEarn;
-        public bool Dead => _currentLife <= 0;
-        public bool Alive => _currentLife > 0;
+        public bool Dead => currentLife <= 0;
+        public bool Alive => currentLife > 0;
 
         public float DeathAnimationTime
         {
@@ -45,12 +45,12 @@ namespace Script.Entities.Monster
                 return 0f;
             }
         }
-        private SplineContainer _splineContainer;
+        private SplineContainer splineContainer;
 
-        private readonly int _deathHash = Animator.StringToHash("Death");
-        private readonly int _hurtHash = Animator.StringToHash("Hurt");
+        private readonly int deathHash = Animator.StringToHash("Death");
+        private readonly int hurtHash = Animator.StringToHash("Hurt");
 
-        private float _currentLife;
+        private float currentLife;
 
 
         private void Awake()
@@ -61,12 +61,14 @@ namespace Script.Entities.Monster
 
         private void OnEnable()
         {
-            _currentLife = life;
+            currentLife = life;
+            Die.RemoveAllListeners();
+            Finish.RemoveAllListeners();
         }
 
         public void SetSpline(SplineContainer spline, float startProgress = 0)
         {
-            _splineContainer = spline;
+            splineContainer = spline;
             Progress = startProgress;
         }
 
@@ -75,13 +77,13 @@ namespace Script.Entities.Monster
             if (Dead) 
                 return;
             
-            Progress += speed / _splineContainer.Spline.GetLength() * Time.deltaTime * LevelManager.Instance.Speed;
+            Progress += speed / splineContainer.Spline.GetLength() * Time.deltaTime * LevelManager.Instance.Speed;
             if (Progress >= 1)
                 Finish.Invoke();
             else
             {
-                Vector3 positionWithoutOffset = _splineContainer.Spline.EvaluatePosition(Progress);
-                transform.position = positionWithoutOffset + _splineContainer.transform.position;
+                Vector3 positionWithoutOffset = splineContainer.Spline.EvaluatePosition(Progress);
+                transform.position = positionWithoutOffset + splineContainer.transform.position;
             }
             
         }
@@ -90,6 +92,9 @@ namespace Script.Entities.Monster
         
         public void TakeDamage(Damage damage)
         {
+            if(Dead)
+                return;
+            
             var weak = weaknessTolerance.GetTupleOrDefault(damage.Type, 1);
  
             damage.Amount *= weak;
@@ -102,11 +107,11 @@ namespace Script.Entities.Monster
             };
             ShowDamage(damageRank, new BigInteger(damage.Amount));
 
-            _currentLife -= damage.Amount;
+            currentLife -= damage.Amount;
             if (Dead)
                 Death();
             else
-                animator.Play(_hurtHash);
+                animator.Play(hurtHash);
         }
 
         private void ShowDamage(DamageRank damageRank, BigInteger amount)
@@ -120,12 +125,12 @@ namespace Script.Entities.Monster
         {
             foreach (var drop in dropOnDeath)
             {
-                var go = LeanPool.Spawn(drop, _splineContainer.EvaluatePosition(0), Quaternion.identity);
+                var go = LeanPool.Spawn(drop, splineContainer.EvaluatePosition(0), Quaternion.identity);
                 var script = go.GetComponent<Monster>();
-                script.SetSpline(_splineContainer, Progress);
+                script.SetSpline(splineContainer, Progress);
                 MonsterGenerator.Instance.AddMonster(script);
             }
-            animator.Play(_deathHash);
+            animator.Play(deathHash);
             Die.Invoke();
         }
 

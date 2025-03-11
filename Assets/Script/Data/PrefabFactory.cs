@@ -22,9 +22,12 @@ namespace Script.Data
 
         [SerializeField] private List<Tuple<DamageRank, GameObject>> uiDamagePrefab;
         [SerializeField] private List<Tuple<TowerType, GameObject>> towerPrefab;
+        [SerializeField] private GameObject levelUI;
 
         public GameObject this[DamageRank rank] => uiDamagePrefab.GetTuple(rank);
         public GameObject this[TowerType type] => towerPrefab.GetTuple(type);
+
+        public static GameObject LevelUI => Instance.levelUI;
     }
 }
 

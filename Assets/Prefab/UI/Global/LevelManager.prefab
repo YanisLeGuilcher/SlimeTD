@@ -997,6 +997,8 @@ MonoBehaviour:
   layerBlock:
     serializedVersion: 2
     m_Bits: 1824
+  moneyEarnByWave: 100
+  moneyEarnByWaveFactor: 0.01
   input: {fileID: 0}
 --- !u!1 &2981479806228243236
 GameObject:

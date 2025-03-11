@@ -21,13 +21,13 @@ namespace Script.Defender
         [SerializeField] private AttackStyle attackStyle = AttackStyle.First;
 
 
-        private readonly List<Monster> _monsterInRange = new();
+        private readonly List<Monster> monsterInRange = new();
 
-        private float _reload;
+        private float reload;
 
-        private bool Ready => _reload <= 0 && _target && attackStyle != AttackStyle.None && IsLookingAtTarget();
+        private bool Ready => reload <= 0 && target && attackStyle != AttackStyle.None && IsLookingAtTarget();
 
-        private Monster _target;
+        private Monster target;
 
         private void Awake()
         {
@@ -42,15 +42,15 @@ namespace Script.Defender
 
         private void Update()
         {
-            _reload -= Time.deltaTime * LevelManager.Instance.Speed;
+            reload -= Time.deltaTime * LevelManager.Instance.Speed;
             
-            if (!_target)
+            if (!target)
                 return;
-            if (_target.Dead)
+            if (target.Dead)
             {
-                _monsterInRange.Remove(_target);
-                _target = SearchTarget();
-                if (!_target)
+                monsterInRange.Remove(target);
+                target = SearchTarget();
+                if (!target)
                     return;
             }
             
@@ -65,31 +65,31 @@ namespace Script.Defender
         private void OnTriggerEnter2D(Collider2D other)
         {
             var script = other.GetComponent<Monster>();
-            if(_monsterInRange.Contains(script))
+            if(monsterInRange.Contains(script))
                 return;
-            _monsterInRange.Add(script);
-            script.Die.AddListener(() => _monsterInRange.Remove(script));
-            script.Finish.AddListener(() => _monsterInRange.Remove(script));
+            monsterInRange.Add(script);
+            script.Die.AddListener(() => monsterInRange.Remove(script));
+            script.Finish.AddListener(() => monsterInRange.Remove(script));
 
-            _target = SearchTarget();
+            target = SearchTarget();
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             var script = other.GetComponent<Monster>();
-            _monsterInRange.Remove(script);
-            script.Die.RemoveListener(() => _monsterInRange.Remove(script));
-            script.Finish.RemoveListener(() => _monsterInRange.Remove(script));
+            monsterInRange.Remove(script);
+            script.Die.RemoveListener(() => monsterInRange.Remove(script));
+            script.Finish.RemoveListener(() => monsterInRange.Remove(script));
             
-            _target = SearchTarget();
+            target = SearchTarget();
         }
 
         private bool IsLookingAtTarget()
         {
-            if (!_target) 
+            if (!target) 
                 return false;
 
-            Vector3 direction = _target.transform.position - transform.position;
+            Vector3 direction = target.transform.position - transform.position;
 
             float angleDifference = Mathf.DeltaAngle(transform.eulerAngles.z, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
@@ -98,7 +98,7 @@ namespace Script.Defender
 
         private void LookAtTarget()
         {
-            Vector3 direction = _target.transform.position - transform.position;
+            Vector3 direction = target.transform.position - transform.position;
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
@@ -108,16 +108,16 @@ namespace Script.Defender
 
         private Monster SearchTarget()
         {
-            if (_monsterInRange.Count > 0)
+            if (monsterInRange.Count > 0)
             {
                 return attackStyle switch
                 {
-                    AttackStyle.First => _monsterInRange.FirstInPosition(),
-                    AttackStyle.Last => _monsterInRange.LastInPosition(),
-                    AttackStyle.Strongest => _monsterInRange.Strongest(),
-                    AttackStyle.Weakest => _monsterInRange.Weakest(),
-                    AttackStyle.Looser => _monsterInRange.Weakest(),
-                    _ => _monsterInRange.First()
+                    AttackStyle.First => monsterInRange.FirstInPosition(),
+                    AttackStyle.Last => monsterInRange.LastInPosition(),
+                    AttackStyle.Strongest => monsterInRange.Strongest(),
+                    AttackStyle.Weakest => monsterInRange.Weakest(),
+                    AttackStyle.Looser => monsterInRange.Weakest(),
+                    _ => monsterInRange.First()
                 };
             } 
             return null;
@@ -125,8 +125,10 @@ namespace Script.Defender
 
         private void Attack()
         {
-            _target.TakeDamage(new Damage {Amount = damage, Type = damageType});
-            _reload = 1 / fireRate;
+            if(target.Dead)
+                return;
+            target.TakeDamage(new Damage {Amount = damage, Type = damageType});
+            reload = 1 / fireRate;
         }
     }
 }

@@ -27,6 +27,8 @@ namespace Script.Manager
         [Header("Data")] 
         [SerializeField] private LayerMask layerAllow;
         [SerializeField] private LayerMask layerBlock;
+        [SerializeField] private float moneyEarnByWave = 100;
+        [SerializeField] private float moneyEarnByWaveFactor = .01f;
 
 
         [SerializeField] private PlayerInput input;
@@ -41,6 +43,8 @@ namespace Script.Manager
         public static LevelManager Instance;
 
         private Camera mainCamera;
+
+        private bool waveProcessing;
 
         private void Awake()
         {
@@ -59,6 +63,13 @@ namespace Script.Manager
             monsterGenerator.OnMonsterDie.AddListener(MonsterDie);
             monsterGenerator.OnMonsterFinish.AddListener(MonsterFinish);
             monsterGenerator.OnWaveFinish.AddListener(WaveFinish);
+        }
+
+        private void OnDestroy()
+        {
+            monsterGenerator.OnMonsterDie.RemoveListener(MonsterDie);
+            monsterGenerator.OnMonsterFinish.RemoveListener(MonsterFinish);
+            monsterGenerator.OnWaveFinish.RemoveListener(WaveFinish);
         }
 
         private void Start()
@@ -115,9 +126,12 @@ namespace Script.Manager
 
         public void StartWave()
         {
+            if(waveProcessing)
+                return;
             monsterGenerator.StartWave();
             startWave.SetActive(false);
             selectSpeed.SetActive(true);
+            waveProcessing = true;
         }
 
         public void SetSpeed(int amount) => Speed = amount;
@@ -144,11 +158,16 @@ namespace Script.Manager
         
         private void WaveFinish()
         {
+            if(!waveProcessing)
+                return;
+            waveProcessing = false;
             currentWaveCount++;
             waveCount.text = currentWaveCount.ToString();
             
             startWave.SetActive(true);
             selectSpeed.SetActive(false);
+            currentMoney += (int)(moneyEarnByWave * (moneyEarnByWaveFactor * currentWaveCount + 1));
+            money.text = currentMoney.ToString();
         }
 
         public void ResumeGame() => ResumeGame(Speed == 0);
@@ -168,16 +187,10 @@ namespace Script.Manager
             }
         }
         
-        public void Retry()
-        {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        }
+        public void Retry() => SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 
 
-        public void GoToMainMenu()
-        {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        }
+        public void GoToMainMenu() => SceneManager.LoadSceneAsync(0);
     }
 }
 

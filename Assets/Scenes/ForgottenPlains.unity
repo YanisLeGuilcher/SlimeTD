@@ -18582,67 +18582,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1980114233
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1980114234}
-  - component: {fileID: 1980114235}
-  m_Layer: 0
-  m_Name: DataSerialize
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1980114234
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980114233}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.008525, y: 3.760822, z: 0.017636154}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1980114235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980114233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed6fb78adf04ae541b61ab94df9779bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiDamagePrefab:
-  - first: -1
-    second: {fileID: 5342700337277123610, guid: 4180740dd2ae3dd4b8d80dc88607e90f,
-      type: 3}
-  - first: 0
-    second: {fileID: 6730841125320495696, guid: ee51af8333d9c5c48a1c469986942aff,
-      type: 3}
-  - first: 1
-    second: {fileID: 3427641454775567567, guid: 16760330babcb7f43a74756b64ed894a,
-      type: 3}
-  - first: 2
-    second: {fileID: 4553607286551071272, guid: 21c1bf9f16d41594fbb0d34872bb4c36,
-      type: 3}
-  towerPrefab:
-  - first: 0
-    second: {fileID: 2801063216530807582, guid: bdaa8660da83e154fa9773b32a2dada3,
-      type: 3}
 --- !u!1001 &709821416702423441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18656,6 +18595,11 @@ PrefabInstance:
       propertyPath: 'trajectories.Array.data[0]'
       value: 
       objectReference: {fileID: 704113095}
+    - target: {fileID: 5040593592222612236, guid: 38063e566ba46cb4894a78c4f6854f0a,
+        type: 3}
+      propertyPath: monsters.Array.data[0].third
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5575472190611256954, guid: 38063e566ba46cb4894a78c4f6854f0a,
         type: 3}
       propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.x
@@ -18770,6 +18714,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825163345296988868, guid: 708ae532811a81242bff2c5d4c6d4def,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3099284682043944796, guid: 708ae532811a81242bff2c5d4c6d4def,
         type: 3}
@@ -18977,4 +18926,3 @@ SceneRoots:
   - {fileID: 1872023773}
   - {fileID: 1929800441}
   - {fileID: 2227154831740042275}
-  - {fileID: 1980114234}
