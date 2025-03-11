@@ -64,7 +64,11 @@ namespace Script.Defender
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var script = other.GetComponent<Monster>();
+            if (!Monster.Monsters.TryGetValue(other.gameObject, out var script))
+            {
+                Debug.LogWarning($"Monster script for {other.name} not found");
+                return;
+            }
             if(monsterInRange.Contains(script))
                 return;
             monsterInRange.Add(script);
@@ -76,7 +80,11 @@ namespace Script.Defender
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            var script = other.GetComponent<Monster>();
+            if (!Monster.Monsters.TryGetValue(other.gameObject, out var script))
+            {
+                Debug.LogWarning($"Monster script for {other.name} not found");
+                return;
+            }
             monsterInRange.Remove(script);
             script.Die.RemoveListener(() => monsterInRange.Remove(script));
             script.Finish.RemoveListener(() => monsterInRange.Remove(script));

@@ -15,6 +15,9 @@ namespace Script.Entities.Monster
     [RequireComponent(typeof(Collider2D))]
     public class Monster : MonoBehaviour
     {
+        public static readonly Dictionary<GameObject,Monster> Monsters = new();
+        
+        
         [SerializeField] private float life = 1;
         [SerializeField] private int damageOnPass = 1;
         [SerializeField] private int moneyEarn = 1;
@@ -57,6 +60,7 @@ namespace Script.Entities.Monster
         {
             gameObject.layer = LayerMask.NameToLayer("Monster");
             collider.isTrigger = true;
+            Monsters.Add(gameObject,this);
         }
 
         private void OnEnable()
@@ -77,7 +81,7 @@ namespace Script.Entities.Monster
             if (Dead) 
                 return;
             
-            Progress += speed / splineContainer.Spline.GetLength() * Time.deltaTime * LevelManager.Instance.Speed;
+            Progress += speed / splineContainer.Spline.GetLength() * LevelManager.DeltaTime;
             if (Progress >= 1)
                 Finish.Invoke();
             else
