@@ -49,7 +49,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a9852363da69e1042ae58a0d56e7e078, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4dbca11f008a91d4ea4d8743f3a966ae, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -61,7 +61,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedSlime
+  m_Name: PurpleSlime
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -142,7 +142,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 837d0d2a25d502f499c914d202037bd7, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3808e938f8a92764aa855a6dc3b325c3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -168,7 +168,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ffccad60845a4c040ba0b71ceea9d815, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1e665be91203eff49a7ccf49d8046755, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

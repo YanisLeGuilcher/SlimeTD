@@ -625,6 +625,15 @@ MonoBehaviour:
     second: 300
   - first: 2
     second: 200
+  waves:
+  - {fileID: 11400000, guid: a926cd20a4f700c4cacd7c3a182ff6dd, type: 2}
+  - {fileID: 11400000, guid: a6267f2b32672644cb2681bd43db0c0c, type: 2}
+  - {fileID: 11400000, guid: 4cf9e292334f1134e8f6e3bc8eaa8fda, type: 2}
+  - {fileID: 11400000, guid: 149753348889d4448a275b72b0d486c9, type: 2}
+  - {fileID: 11400000, guid: 0e8d7df5cf869b1489f74b24561dc032, type: 2}
+  - {fileID: 11400000, guid: deef34d204535af4abf220cd29471155, type: 2}
+  - {fileID: 11400000, guid: e401638c738a2de40a961cae66a507a1, type: 2}
+  - {fileID: 11400000, guid: 2883edcadb49ee14d9b9532d107e6a55, type: 2}
 --- !u!1 &390326103
 GameObject:
   m_ObjectHideFlags: 0

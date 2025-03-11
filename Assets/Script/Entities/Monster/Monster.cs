@@ -135,6 +135,8 @@ namespace Script.Entities.Monster
 
         private void Death()
         {
+            int round = 0;
+            
             foreach (var drop in dropOnDeath)
             {
                 var go = LeanPool.Spawn(drop, splineContainer.EvaluatePosition(0), Quaternion.identity);
@@ -143,7 +145,11 @@ namespace Script.Entities.Monster
                     Debug.LogWarning($"Monster script for {go.name} not found");
                     return;
                 }
-                script.SetSpline(splineContainer, Progress);
+
+                float newProgress = Progress - 0.005f * round;
+                round++;
+                
+                script.SetSpline(splineContainer, newProgress);
                 MonsterGenerator.Instance.AddMonster(script);
             }
             animator.Play(deathHash);

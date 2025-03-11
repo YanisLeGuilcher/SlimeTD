@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
+using Script.Data;
 using Script.Entities.Monster;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,13 +9,13 @@ using UnityEngine.Splines;
 
 namespace Script.Manager
 {
-        public class MonsterGenerator : MonoBehaviour
+    public class MonsterGenerator : MonoBehaviour
     {
-        #region SerialiseField
+        
+        public static MonsterGenerator Instance;
 
-        [SerializeField,Tooltip("First is the prefab of monster\nSecond is the min wave he can spawn\nThird is the amount of it in one wave")] 
-        private List<Script.Data.Tuple<GameObject,int,float>> monsters = new();
-        [SerializeField] private float timeBetweenEnemy = 1;
+        #region SerialiseField
+        
         [SerializeField] private List<SplineContainer> trajectories = new();
 
         #endregion
@@ -30,12 +30,17 @@ namespace Script.Manager
 
         #endregion
 
-        public static MonsterGenerator Instance;
+
+        #region Event
 
         public readonly UnityEvent<Monster> OnMonsterFinish = new();
         public readonly UnityEvent<Monster> OnMonsterDie = new();
         public readonly UnityEvent OnWaveFinish = new();
-        
+
+        #endregion
+
+        #region UnityFuncEvent
+
         private void Awake()
         {
             if(Instance)
@@ -49,30 +54,32 @@ namespace Script.Manager
                 Instance = null;
         }
 
+        #endregion
+        
+        
+
         public void StartWave() => spawningMonster = StartCoroutine(RtnStartWave());
 
         private IEnumerator RtnStartWave()
         {
             currentMonsters.Clear();
-            Dictionary<GameObject, int> monstersAmount = new();
-            foreach (var monsterStats in monsters)
-                if(currentWave >= monsterStats.second)
-                    monstersAmount.Add(monsterStats.first, Math.Max(1, (int)(monsterStats.third * currentWave)));
+
+            var waveParts = DataSerializer.GetWave(currentWave);
 
             
-            foreach (var monster in monstersAmount)
+            foreach (var wavePart in waveParts.waveParts)
             {
                 int round = 0;
-                while (monster.Value > round)
+                while (wavePart.numberOfMonster > round)
                 {
-                    float tmpWait = timeBetweenEnemy;
+                    float tmpWait = wavePart.timeBetweenMonster;
                     while (tmpWait >= 0)
                     {
                         yield return null;
                         tmpWait -= LevelManager.DeltaTime;
                     }
                     var chosenSpline = trajectories[round % trajectories.Count];
-                    var go = LeanPool.Spawn(monster.Key, chosenSpline.EvaluatePosition(0), Quaternion.identity);
+                    var go = LeanPool.Spawn(wavePart.monster, chosenSpline.EvaluatePosition(0), Quaternion.identity);
                     if (!Monster.Monsters.TryGetValue(go, out var script))
                     {
                         Debug.LogWarning($"Monster script for {go.name} not found");

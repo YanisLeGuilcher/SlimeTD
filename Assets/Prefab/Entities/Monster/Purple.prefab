@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1223289849979991134}
   - component: {fileID: 2223969930064882956}
   m_Layer: 0
-  m_Name: Red
+  m_Name: Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,13 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 1
-  damageOnPass: 3
+  damageOnPass: 6
   moneyEarn: 1
-  speed: 3
+  speed: 2
   rank: 1
   weaknessTolerance: []
   dropOnDeath:
-  - {fileID: 6777909432648081452, guid: ad5bfc44784cc4843aefa34319e8ca65, type: 3}
+  - {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a, type: 3}
+  - {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a, type: 3}
   animator: {fileID: 785018065675348466}
   collider: {fileID: 2223969930064882956}
 --- !u!58 &2223969930064882956
@@ -169,7 +170,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1002
-  m_Sprite: {fileID: 4367289792872251007, guid: d4e8a5c5eececab46942986a743fd7d8,
+  m_Sprite: {fileID: 4367289792872251007, guid: 1d4c04c1eb8033641b612b9c1ff98ecc,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -191,7 +192,7 @@ Animator:
   m_GameObject: {fileID: 7788704745249044720}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3d9fa2ae96ea9184d9ec86e2f8571924, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5bdecb369bfadd741a6a2bfd95353649, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

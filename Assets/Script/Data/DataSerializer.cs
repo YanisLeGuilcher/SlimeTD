@@ -1,5 +1,3 @@
-
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +7,7 @@ namespace Script.Data
     {
         [SerializeField] private List<Level> levels;
         [SerializeField] private List<Tuple<TowerType,int>> towerPrice;
+        [SerializeField] private List<Wave> waves;
 
         private static DataSerializer instance;
 
@@ -26,6 +25,8 @@ namespace Script.Data
 
         public static List<Level> Levels => instance.levels;
         public static int GetPriceOfTower(TowerType type) => instance.towerPrice.GetTuple(type);
+
+        public static Wave GetWave(int waveCount) => instance.waves[waveCount - 1];
     }
 }
 
