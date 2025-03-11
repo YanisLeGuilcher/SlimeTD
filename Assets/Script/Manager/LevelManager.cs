@@ -1,7 +1,9 @@
 using Script.Data;
+using Script.Entities.Defender;
 using Script.Entities.Monster;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -10,6 +12,8 @@ namespace Script.Manager
 {
     public class LevelManager : MonoBehaviour
     {
+        public static readonly UnityEvent OnClick = new();
+        
         [Header("UI")]
         [SerializeField] private TMP_Text waveCount;
         [SerializeField] private TMP_Text lifePoint;
@@ -86,15 +90,19 @@ namespace Script.Manager
         private void Update()
         {
             if (Input.GetMouseButtonDown(1))
+            {
                 RemoveChoiceOfPlacement();
+                OnClick.Invoke();
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 if (EventSystem.current.IsPointerOverGameObject())
                     return;
                 
+                OnClick.Invoke();
+                
                 Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, layerBlock);
-
                 if (layerAllow.Contains(hit.collider.gameObject.layer))
                 {
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -108,6 +116,29 @@ namespace Script.Manager
                 else
                     RemoveChoiceOfPlacement();
             }
+        }
+
+        public void UpgradeTower(Defender oldOne, TowerType newOne)
+        {
+            Debug.Log(newOne);
+            int price = DataSerializer.GetPriceOfTower(newOne);
+            if(currentMoney < price)
+                return;
+            
+            currentMoney -= price;
+            money.text = currentMoney.ToString();
+            
+            Instantiate(PrefabFactory.Instance[newOne], oldOne.transform.position, Quaternion.identity);
+            
+            Destroy(oldOne.gameObject);
+        }
+
+        public void SellTower(Defender defender)
+        {
+            currentMoney += defender.PriceOnSell;
+            money.text = Instance.currentMoney.ToString();
+            
+            Destroy(defender.gameObject);
         }
 
         public void SpawnTower(TowerType type, Vector3 position)

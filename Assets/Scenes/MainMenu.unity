@@ -582,6 +582,12 @@ MonoBehaviour:
   - first: 0
     second: {fileID: 2801063216530807582, guid: bdaa8660da83e154fa9773b32a2dada3,
       type: 3}
+  - first: 1
+    second: {fileID: 2801063216530807582, guid: 95cc68194df0d7d42aa237c112b89f5f,
+      type: 3}
+  - first: 2
+    second: {fileID: 2801063216530807582, guid: 6255eedb3911c2e43bb05e597b229777,
+      type: 3}
   levelUI: {fileID: 3939118195160953445, guid: 9ef087efbbb9d1c418af7e9301543b4e, type: 3}
 --- !u!4 &308103942
 Transform:
@@ -616,7 +622,7 @@ MonoBehaviour:
   - first: 0
     second: 300
   - first: 1
-    second: 200
+    second: 300
   - first: 2
     second: 200
 --- !u!1 &390326103

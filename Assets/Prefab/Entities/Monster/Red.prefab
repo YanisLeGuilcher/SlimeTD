@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 1
-  damageOnPass: 1
+  damageOnPass: 3
+  moneyEarn: 1
   speed: 3
   rank: 1
   weaknessTolerance: []

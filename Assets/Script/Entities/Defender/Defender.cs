@@ -1,11 +1,14 @@
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lean.Pool;
 using Script.Data;
-using Script.Entities.Monster;
 using Script.Manager;
+using Script.UI;
 using UnityEngine;
 
-namespace Script.Defender
+namespace Script.Entities.Defender
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Defender : MonoBehaviour
@@ -14,22 +17,28 @@ namespace Script.Defender
         [SerializeField] private float damage = 1;
         [SerializeField] private float fireRate = 1;
         [SerializeField] private float rotationSpeed = 1;
+        [SerializeField] private int priceOnSell = 200;
         [SerializeField] private DamageType damageType = DamageType.Classic;
         [SerializeField] private CircleCollider2D rangeCollider;
         [SerializeField] private SpriteRenderer rangePreview;
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private AttackStyle attackStyle = AttackStyle.First;
+        [SerializeField] private GameObject shootEffectPrefab;
+
+        [SerializeField] private GameObject upgradePanel;
 
 
-        private readonly List<Monster> monsterInRange = new();
+        private readonly List<Monster.Monster> monsterInRange = new();
 
         private float reload;
 
         private bool Ready => reload <= 0 && target && attackStyle != AttackStyle.None && IsLookingAtTarget();
 
-        private Monster target;
+        private Monster.Monster target;
 
 
+        public int PriceOnSell => priceOnSell;
+        
         private void Awake()
         {
             rangeCollider.gameObject.layer = LayerMask.NameToLayer("TowerRange");
@@ -39,6 +48,13 @@ namespace Script.Defender
             rangePreview.enabled = false;
             rangeCollider.isTrigger = true;
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            
+            LevelManager.OnClick.AddListener(CatchOtherClick);
+        }
+
+        private void OnDestroy()
+        {
+            LevelManager.OnClick.RemoveListener(CatchOtherClick);
         }
 
         private void Update()
@@ -65,7 +81,7 @@ namespace Script.Defender
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!Monster.Monsters.TryGetValue(other.gameObject, out var script))
+            if (!Monster.Monster.Monsters.TryGetValue(other.gameObject, out var script))
             {
                 Debug.LogWarning($"Monster script for {other.name} not found");
                 return;
@@ -81,7 +97,7 @@ namespace Script.Defender
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (!Monster.Monsters.TryGetValue(other.gameObject, out var script))
+            if (!Monster.Monster.Monsters.TryGetValue(other.gameObject, out var script))
             {
                 Debug.LogWarning($"Monster script for {other.name} not found");
                 return;
@@ -91,6 +107,19 @@ namespace Script.Defender
             script.Finish.RemoveListener(() => monsterInRange.Remove(script));
             
             target = SearchTarget();
+        }
+
+
+        public void OnClick() => upgradePanel.SetActive(true);
+
+        public void Upgrade(int type) =>
+            LevelManager.Instance.UpgradeTower(this, (TowerType)Enum.ToObject(typeof(TowerType), type));
+
+        public void Sell() => LevelManager.Instance.SellTower(this);
+
+        private void CatchOtherClick()
+        {
+            upgradePanel.SetActive(false);
         }
 
         private bool IsLookingAtTarget()
@@ -115,7 +144,7 @@ namespace Script.Defender
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * LevelManager.DeltaTime);
         }
 
-        private Monster SearchTarget()
+        private Monster.Monster SearchTarget()
         {
             if (monsterInRange.Count > 0)
             {
@@ -136,8 +165,19 @@ namespace Script.Defender
         {
             if(target.Dead)
                 return;
+            SpawnShootEffect();
+            
             target.TakeDamage(new Damage {Amount = damage, Type = damageType});
             reload = 1 / fireRate;
+        }
+
+        private void SpawnShootEffect()
+        {
+            var go = LeanPool.Spawn(shootEffectPrefab);
+            if (ShootEffect.ShootEffects.TryGetValue(go, out var script))
+                script.SetTrajectory(transform.position, target.transform.position);
+            else
+                Debug.LogWarning($"ShootEffect script for {go.name} not found");
         }
     }
 }
