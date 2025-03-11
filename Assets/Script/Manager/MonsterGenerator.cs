@@ -73,7 +73,11 @@ namespace Script.Manager
                     }
                     var chosenSpline = trajectories[round % trajectories.Count];
                     var go = LeanPool.Spawn(monster.Key, chosenSpline.EvaluatePosition(0), Quaternion.identity);
-                    var script = go.GetComponent<Monster>();
+                    if (!Monster.Monsters.TryGetValue(go, out var script))
+                    {
+                        Debug.LogWarning($"Monster script for {go.name} not found");
+                        continue;
+                    }
                     script.SetSpline(chosenSpline);
                     AddMonster(script);
                     round++;

@@ -17,9 +17,22 @@ namespace Script.Manager
 
         private void Start()
         {
+            startPanel.SetActive(true);
+            levelsPanel.SetActive(true);
+            shopPanel.SetActive(true);
+            successPanel.SetActive(true);
+            returnButton.SetActive(true);
+            
             var levels = DataSerializer.Levels;
             foreach (var level in levels)
-                Instantiate(PrefabFactory.LevelUI, levelsContainer).GetComponent<LevelButton>().SetLevel(level);
+            {
+                var go = Instantiate(PrefabFactory.LevelUI, levelsContainer);
+                if (LevelButton.LevelButtons.TryGetValue(go, out var script))
+                    script.SetLevel(level);
+                else
+                    Debug.LogWarning($"LevelButton script for {go.name} not found");
+            }
+            Return();
         }
 
 

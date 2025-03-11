@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 using Lean.Pool;
 using TMPro;
@@ -10,50 +11,58 @@ namespace Script.UI
 {
     public class DamageUIEffect : MonoBehaviour
     {
+        public static readonly Dictionary<GameObject,DamageUIEffect> DamageUIEffects = new();
+        
         [SerializeField] private TMP_Text text;
 
         [SerializeField] private float translationSpeed = 1;
         [SerializeField] private float duration = 1;
         [SerializeField] private float fadeDuration = 1;
 
-        private float _currentDuration;
-        private float _currentFadeDuration;
+        private float currentDuration;
+        private float currentFadeDuration;
 
-        private Color _baseColor;
+        private Color baseColor;
     
         public void SetAmount(BigInteger amount) => text.text = amount >= 1000 ? $"{amount/1000}K" : $"{amount}";
 
         private void Awake()
         {
-            _baseColor = text.color;
+            baseColor = text.color;
+            DamageUIEffects.Add(gameObject, this);
+        }
+
+        private void OnDestroy()
+        {
+            DamageUIEffects.Remove(gameObject);
         }
 
         private void OnEnable()
         {
-            text.color = _baseColor;
-            _currentDuration = duration;
-            _currentFadeDuration = fadeDuration;
+            text.color = baseColor;
+            currentDuration = duration;
+            currentFadeDuration = fadeDuration;
             StartCoroutine(Fade());
         }
 
         private IEnumerator Fade()
         {
             Vector3 translation = Random.onUnitSphere.normalized * translationSpeed;
-            while (_currentDuration > 0)
+            while (currentDuration > 0)
             {
                 transform.Translate(translation * Time.deltaTime);
                 yield return null;
-                _currentDuration -= Time.deltaTime;
+                currentDuration -= Time.deltaTime;
             }
-            float maxFadeDuration = _currentFadeDuration;
-            while (_currentFadeDuration > 0)
+            float maxFadeDuration = currentFadeDuration;
+            while (currentFadeDuration > 0)
             {
                 var tmp = text.color;
-                tmp.a = _currentFadeDuration / maxFadeDuration;
+                tmp.a = currentFadeDuration / maxFadeDuration;
                 text.color = tmp;
                 transform.Translate(translation * Time.deltaTime);
                 yield return null;
-                _currentFadeDuration -= Time.deltaTime;
+                currentFadeDuration -= Time.deltaTime;
             }
             var endColor = text.color;
             endColor.a = 0;

@@ -63,6 +63,11 @@ namespace Script.Entities.Monster
             Monsters.Add(gameObject,this);
         }
 
+        private void OnDestroy()
+        {
+            Monsters.Remove(gameObject);
+        }
+
         private void OnEnable()
         {
             currentLife = life;
@@ -122,7 +127,10 @@ namespace Script.Entities.Monster
         {
             var go = LeanPool.Spawn(PrefabFactory.Instance[damageRank]);
             go.transform.position = transform.position;
-            go.GetComponent<DamageUIEffect>().SetAmount(amount);
+            if (DamageUIEffect.DamageUIEffects.TryGetValue(go, out var script))
+                script.SetAmount(amount);
+            else
+                Debug.LogWarning($"DamageUIEffect script for {go.name} not found");
         }
 
         private void Death()
@@ -130,7 +138,11 @@ namespace Script.Entities.Monster
             foreach (var drop in dropOnDeath)
             {
                 var go = LeanPool.Spawn(drop, splineContainer.EvaluatePosition(0), Quaternion.identity);
-                var script = go.GetComponent<Monster>();
+                if (!Monsters.TryGetValue(go, out var script))
+                {
+                    Debug.LogWarning($"Monster script for {go.name} not found");
+                    return;
+                }
                 script.SetSpline(splineContainer, Progress);
                 MonsterGenerator.Instance.AddMonster(script);
             }
