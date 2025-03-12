@@ -65,31 +65,35 @@ namespace Script.Manager
             currentMonsters.Clear();
 
             var waveParts = DataSerializer.GetWave(currentWave);
-
-            
-            foreach (var wavePart in waveParts.waveParts)
+            bool isFirstSpawn = true;
+            while (isFirstSpawn || (waveParts.isInfiniteWave && !LevelManager.PlayerLoose))
             {
-                int round = 0;
-                while (wavePart.numberOfMonster > round)
+                isFirstSpawn = false;
+                foreach (var wavePart in waveParts.waveParts)
                 {
-                    float tmpWait = wavePart.timeBetweenMonster;
-                    while (tmpWait >= 0)
+                    int round = 0;
+                    while (wavePart.numberOfMonster > round)
                     {
-                        yield return null;
-                        tmpWait -= LevelManager.DeltaTime;
+                        float tmpWait = wavePart.timeBetweenMonster;
+                        while (tmpWait >= 0)
+                        {
+                            yield return null;
+                            tmpWait -= LevelManager.DeltaTime;
+                        }
+                        var chosenSpline = trajectories[round % trajectories.Count];
+                        var go = LeanPool.Spawn(wavePart.monster, chosenSpline.EvaluatePosition(0), Quaternion.identity);
+                        if (!Monster.Monsters.TryGetValue(go, out var script))
+                        {
+                            Debug.LogWarning($"Monster script for {go.name} not found");
+                            continue;
+                        }
+                        script.SetSpline(chosenSpline);
+                        AddMonster(script);
+                        round++;
                     }
-                    var chosenSpline = trajectories[round % trajectories.Count];
-                    var go = LeanPool.Spawn(wavePart.monster, chosenSpline.EvaluatePosition(0), Quaternion.identity);
-                    if (!Monster.Monsters.TryGetValue(go, out var script))
-                    {
-                        Debug.LogWarning($"Monster script for {go.name} not found");
-                        continue;
-                    }
-                    script.SetSpline(chosenSpline);
-                    AddMonster(script);
-                    round++;
                 }
             }
+            
             spawningMonster = null;
             currentWave++;
         }

@@ -17,6 +17,8 @@ namespace Script.Data
         }
 
         public List<WavePart> waveParts;
+
+        public bool isInfiniteWave;
     }
 }
 

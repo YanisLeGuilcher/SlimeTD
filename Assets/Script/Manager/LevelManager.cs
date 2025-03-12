@@ -49,6 +49,8 @@ namespace Script.Manager
         public static float DeltaTime => Instance.Speed * Time.deltaTime;
         private int cacheSpeed = 1;
 
+        public static bool PlayerLoose => Instance.currentLifePoint <= 0;
+
         public static LevelManager Instance;
 
         private Camera mainCamera;
