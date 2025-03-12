@@ -515,6 +515,7 @@ MonoBehaviour:
   rangePreview: {fileID: 2922483160457500784}
   rigidBody: {fileID: 5525853940573244160}
   attackStyle: 0
+  sellCost: {fileID: 9089782545356959839}
   mesh: {fileID: 6820291129637742512}
   shootEffectPrefab: {fileID: 5410567973748635214, guid: 939a08d600d70904e8a138e2eadc2238,
     type: 3}

@@ -6,6 +6,7 @@ using Lean.Pool;
 using Script.Data;
 using Script.Manager;
 using Script.UI;
+using TMPro;
 using UnityEngine;
 
 namespace Script.Entities.Defender
@@ -23,6 +24,7 @@ namespace Script.Entities.Defender
         [SerializeField] private SpriteRenderer rangePreview;
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private AttackStyle attackStyle = AttackStyle.First;
+        [SerializeField] private TMP_Text sellCost;
         [SerializeField] private GameObject mesh;
         [SerializeField] private GameObject shootEffectPrefab;
 
@@ -40,7 +42,7 @@ namespace Script.Entities.Defender
 
         public int PriceOnSell => priceOnSell;
         
-        private void Awake()
+        private void Start()
         {
             rangeCollider.gameObject.layer = LayerMask.NameToLayer("TowerRange");
             gameObject.layer = LayerMask.NameToLayer("Tower");
@@ -49,6 +51,8 @@ namespace Script.Entities.Defender
             rangePreview.enabled = false;
             rangeCollider.isTrigger = true;
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
+
+            sellCost.text = priceOnSell.ToString();
             
             LevelManager.OnClick.AddListener(CatchOtherClick);
         }
