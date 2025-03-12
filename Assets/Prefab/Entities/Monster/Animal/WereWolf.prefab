@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3467853073416201807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.15, z: 0}
-  m_LocalScale: {x: 2.8, y: 4, z: 4}
+  m_LocalScale: {x: 0.7, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7520307233447468310}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &5154188880362623000
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77,8 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1000
-  m_Sprite: {fileID: 7013631516640934163, guid: b438465a32eb63243a7889eb1f400d29,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b0ba3ef17a62404d985ccc14f6d9c95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 3467853073416201807}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7533fdb9301064a489477fe43efa2b17, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22cb056577491454c8e30620cdc28242, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -123,7 +122,7 @@ GameObject:
   - component: {fileID: 860091484150937300}
   - component: {fileID: 3899273314788305543}
   m_Layer: 0
-  m_Name: Bat 3
+  m_Name: WereWolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,11 +156,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eeff6a0f39b21409868cda3848f991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 3
-  damageOnPass: 1
-  moneyEarn: 1
-  speed: 2
-  rank: 1
+  life: 15
+  damageOnPass: 5
+  moneyEarn: 3
+  speed: 1.5
+  rank: 3
   weaknessTolerance: []
   dropOnDeath: []
   animator: {fileID: 5988255605515244686}

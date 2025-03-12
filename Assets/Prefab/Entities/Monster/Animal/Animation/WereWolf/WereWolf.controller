@@ -71,7 +71,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d921ce6b5bfca084798ec423eca785af, type: 2}
+  m_Motion: {fileID: 7400000, guid: a6f7244574d90a34c8261acf3ddf1856, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -83,7 +83,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bat
+  m_Name: WereWolf
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -120,7 +120,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 189625f5a991bb949bf0fde586105bf9, type: 2}
+  m_Motion: {fileID: 7400000, guid: 87a00f27d088764498872b9396ffe004, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -146,7 +146,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: afff1f42a58d9b648956bafbbbd61eb5, type: 2}
+  m_Motion: {fileID: 7400000, guid: 166996cf60f7e1348b695bec97533565, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
