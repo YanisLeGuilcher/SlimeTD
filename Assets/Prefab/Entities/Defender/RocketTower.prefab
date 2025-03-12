@@ -69,6 +69,38 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 6
+--- !u!1 &2792115965091397858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1116307704635797534}
+  m_Layer: 0
+  m_Name: corectRotation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1116307704635797534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2792115965091397858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1192223094654203561}
+  m_Father: {fileID: 6433158878501126441}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2801063216530807582
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +132,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1192223094654203561}
+  - {fileID: 1116307704635797534}
   - {fileID: 6380749299335985084}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 6
   damage: 20
-  fireRate: 0.5
+  fireRate: 0.4
   rotationSpeed: 2
   priceOnSell: 200
   damageType: 0
@@ -126,7 +158,8 @@ MonoBehaviour:
   rangePreview: {fileID: 2922483160457500784}
   rigidBody: {fileID: 5525853940573244160}
   attackStyle: 0
-  shootEffectPrefab: {fileID: 5410567973748635214, guid: 939a08d600d70904e8a138e2eadc2238,
+  mesh: {fileID: 2792115965091397858}
+  shootEffectPrefab: {fileID: 5410567973748635214, guid: a120e80549f481b4186abaa36336ed3a,
     type: 3}
   upgradePanel: {fileID: 0}
 --- !u!50 &5525853940573244160
@@ -181,12 +214,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8552743726173571166}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 6433158878501126441}
+  m_Father: {fileID: 1116307704635797534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &1216517647709538967
 SpriteRenderer:

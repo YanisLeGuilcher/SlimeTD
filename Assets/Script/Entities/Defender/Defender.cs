@@ -23,6 +23,7 @@ namespace Script.Entities.Defender
         [SerializeField] private SpriteRenderer rangePreview;
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private AttackStyle attackStyle = AttackStyle.First;
+        [SerializeField] private GameObject mesh;
         [SerializeField] private GameObject shootEffectPrefab;
 
         [SerializeField] private GameObject upgradePanel;
@@ -110,7 +111,12 @@ namespace Script.Entities.Defender
         }
 
 
-        public void OnClick() => upgradePanel.SetActive(true);
+        public void OnClick()
+        {
+            if(upgradePanel)
+                upgradePanel.SetActive(true);
+        }
+
 
         public void Upgrade(int type) =>
             LevelManager.Instance.UpgradeTower(this, (TowerType)Enum.ToObject(typeof(TowerType), type));
@@ -119,7 +125,8 @@ namespace Script.Entities.Defender
 
         private void CatchOtherClick()
         {
-            upgradePanel.SetActive(false);
+            if(upgradePanel)
+                upgradePanel.SetActive(false);
         }
 
         private bool IsLookingAtTarget()
@@ -127,21 +134,21 @@ namespace Script.Entities.Defender
             if (!target) 
                 return false;
 
-            Vector3 direction = target.transform.position - transform.position;
+            Vector3 direction = target.transform.position - mesh.transform.position;
 
-            float angleDifference = Mathf.DeltaAngle(transform.eulerAngles.z, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            float angleDifference = Mathf.DeltaAngle(mesh.transform.eulerAngles.z, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
             return Mathf.Abs(angleDifference) < 5f;
         }
 
         private void LookAtTarget()
         {
-            Vector3 direction = target.transform.position - transform.position;
+            Vector3 direction = target.transform.position - mesh.transform.position;
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * LevelManager.DeltaTime);
+            mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, targetRotation, rotationSpeed * LevelManager.DeltaTime);
         }
 
         private Monster.Monster SearchTarget()
