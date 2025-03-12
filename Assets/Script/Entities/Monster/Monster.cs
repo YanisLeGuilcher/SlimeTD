@@ -81,18 +81,22 @@ namespace Script.Entities.Monster
             Progress = startProgress;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (Dead) 
                 return;
             
-            Progress += speed / splineContainer.Spline.GetLength() * LevelManager.DeltaTime;
+            Progress += speed / splineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
             if (Progress >= 1)
                 Finish.Invoke();
             else
             {
                 Vector3 positionWithoutOffset = splineContainer.Spline.EvaluatePosition(Progress);
-                transform.position = positionWithoutOffset + splineContainer.transform.position;
+                Vector3 newPosition = positionWithoutOffset + splineContainer.transform.position;
+                
+                TurnMesh((newPosition - transform.position).x > 0.01f);
+                
+                transform.position = newPosition;
             }
             
         }
@@ -154,6 +158,11 @@ namespace Script.Entities.Monster
             }
             animator.Play(deathHash);
             Die.Invoke();
+        }
+
+        private void TurnMesh(bool right)
+        {
+            transform.rotation = right ? Quaternion.identity : Quaternion.Euler(new Vector3(0,180,0));
         }
 
 #if UNITY_EDITOR

@@ -45,6 +45,7 @@ namespace Script.Manager
         public bool Paused { get; private set; }
 
         public int Speed => Paused ? 0 : cacheSpeed;
+        public static float FixedDeltaTime => Instance.Speed * Time.fixedDeltaTime;
         public static float DeltaTime => Instance.Speed * Time.deltaTime;
         private int cacheSpeed = 1;
 

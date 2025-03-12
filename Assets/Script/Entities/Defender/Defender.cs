@@ -58,9 +58,9 @@ namespace Script.Entities.Defender
             LevelManager.OnClick.RemoveListener(CatchOtherClick);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            reload -= LevelManager.DeltaTime;
+            reload -= LevelManager.FixedDeltaTime;
             
             if (!target)
                 return;
@@ -148,7 +148,7 @@ namespace Script.Entities.Defender
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
 
-            mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, targetRotation, rotationSpeed * LevelManager.DeltaTime);
+            mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, targetRotation, rotationSpeed * LevelManager.FixedDeltaTime);
         }
 
         private Monster.Monster SearchTarget()
