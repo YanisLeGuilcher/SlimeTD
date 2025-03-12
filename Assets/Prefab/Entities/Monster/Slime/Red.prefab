@@ -50,7 +50,7 @@ MonoBehaviour:
   damageOnPass: 3
   moneyEarn: 1
   speed: 3
-  rank: 1
+  rank: 3
   weaknessTolerance: []
   dropOnDeath:
   - {fileID: 6777909432648081452, guid: ad5bfc44784cc4843aefa34319e8ca65, type: 3}
