@@ -61,7 +61,25 @@ MonoBehaviour:
   - m_EditModeType: 1
     m_Knots:
     - Position:
+        x: 5
+        y: 4
+        z: 0
+      TangentIn:
         x: 0
+        y: 0
+        z: 0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: -0.5
+          y: 0.5
+          z: -0.5
+          w: 0.5
+    - Position:
+        x: 5
         y: 0
         z: 0
       TangentIn:
@@ -72,6 +90,24 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
+      Rotation:
+        value:
+          x: -0.5
+          y: 0.5
+          z: -0.5
+          w: 0.5
+    - Position:
+        x: 14.5
+        y: 0
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -4.75
+      TangentOut:
+        x: 0
+        y: 0
+        z: 4.75
       Rotation:
         value:
           x: -0.5
@@ -164,10 +200,10 @@ MonoBehaviour:
         z: 0
       Rotation:
         value:
-          x: -0.6532815
-          y: 0.27059805
-          z: -0.27059805
-          w: 0.6532815
+          x: -0.5645178
+          y: 0.42581654
+          z: -0.42581654
+          w: 0.5645178
     - Position:
         x: 12
         y: -8
@@ -362,10 +398,10 @@ MonoBehaviour:
         z: 0
       Rotation:
         value:
-          x: -0.4757076
-          y: 0.5231656
-          z: -0.5231656
-          w: 0.4757076
+          x: 0.6603724
+          y: 0.25280106
+          z: 0.25280127
+          w: 0.66037226
     - Position:
         x: 36
         y: -13
@@ -380,16 +416,34 @@ MonoBehaviour:
         z: 0
       Rotation:
         value:
-          x: -0.5
-          y: 0.5
-          z: -0.5
-          w: 0.5
+          x: 0
+          y: 0.70710677
+          z: 0
+          w: 0.70710677
+    - Position:
+        x: 36
+        y: -17
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: 0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0
+          z: 0
+          w: 1
     m_MetaData:
     - Mode: 1
       Tension: 0.5
     - Mode: 1
       Tension: 0.5
-    - Mode: 1
+    - Mode: 4
       Tension: 0.5
     - Mode: 1
       Tension: 0.5
@@ -417,6 +471,12 @@ MonoBehaviour:
       Tension: 0.5
     - Mode: 1
       Tension: 0.5
+    - Mode: 1
+      Tension: 0.5
+    - Mode: 1
+      Tension: 0.5
+    - Mode: 1
+      Tension: 0
     - Mode: 1
       Tension: 0.5
     - Mode: 1
@@ -477,18 +537,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4e7cb8501a0954a947c7eb1ef0a667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsters:
-  - first: {fileID: 8424082848898548215, guid: 9fedc77047b44ac45bcd0900a7e108ad, type: 3}
-    second: 0
-    third: 3
-  - first: {fileID: 6777909432648081452, guid: ad5bfc44784cc4843aefa34319e8ca65, type: 3}
-    second: 3
-    third: 2
-  - first: {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a, type: 3}
-    second: 6
-    third: 1
-  timeBetweenEnemy: 1
-  moneyEarnByWave: 100
-  moneyEarnByWaveFactor: 100
   trajectories:
-  - {fileID: 0}
+  - {fileID: 5575472190611256954}
