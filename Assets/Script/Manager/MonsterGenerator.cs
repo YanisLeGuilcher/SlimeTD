@@ -22,7 +22,7 @@ namespace Script.Manager
 
         #region Private
 
-        private int currentWave = 1;
+        
 
         private readonly List<Monster> currentMonsters = new();
 
@@ -30,7 +30,10 @@ namespace Script.Manager
 
         #endregion
 
+        
 
+        public int CurrentWave { get; private set; } = 1;
+        
         #region Event
 
         public readonly UnityEvent<Monster> OnMonsterFinish = new();
@@ -64,7 +67,7 @@ namespace Script.Manager
         {
             currentMonsters.Clear();
 
-            var waveParts = DataSerializer.GetWave(currentWave);
+            var waveParts = DataSerializer.GetWave(CurrentWave);
             bool isFirstSpawn = true;
             while (isFirstSpawn || (waveParts.isInfiniteWave && !LevelManager.PlayerLoose))
             {
@@ -92,10 +95,10 @@ namespace Script.Manager
                         round++;
                     }
                 }
+                CurrentWave++;
+                LevelManager.Instance.UpdateWaveCount();
             }
-            
             spawningMonster = null;
-            currentWave++;
         }
 
         public void AddMonster(Monster monster)

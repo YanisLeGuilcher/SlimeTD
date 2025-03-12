@@ -39,7 +39,6 @@ namespace Script.Manager
 
         private int currentLifePoint = 100;
         private int currentMoney = 400;
-        private int currentWaveCount = 1;
 
         
         public bool Paused { get; private set; }
@@ -69,7 +68,7 @@ namespace Script.Manager
             Instance = this;
             lifePoint.text = currentLifePoint.ToString();
             money.text = currentMoney.ToString();
-            waveCount.text = currentWaveCount.ToString();
+            UpdateWaveCount();
             
             monsterGenerator.OnMonsterDie.AddListener(MonsterDie);
             monsterGenerator.OnMonsterFinish.AddListener(MonsterFinish);
@@ -120,6 +119,8 @@ namespace Script.Manager
                     RemoveChoiceOfPlacement();
             }
         }
+
+        public void UpdateWaveCount() => waveCount.text = monsterGenerator.CurrentWave.ToString();
 
         public void UpgradeTower(Defender oldOne, TowerType newOne)
         {
@@ -206,12 +207,11 @@ namespace Script.Manager
             if(!waveProcessing)
                 return;
             waveProcessing = false;
-            currentWaveCount++;
-            waveCount.text = currentWaveCount.ToString();
+            UpdateWaveCount();
             
             startWave.SetActive(true);
             selectSpeed.SetActive(false);
-            currentMoney += (int)(moneyEarnByWave * (moneyEarnByWaveFactor * currentWaveCount + 1));
+            currentMoney += (int)(moneyEarnByWave * (moneyEarnByWaveFactor * monsterGenerator.CurrentWave + 1));
             money.text = currentMoney.ToString();
         }
 
