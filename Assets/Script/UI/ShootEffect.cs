@@ -11,6 +11,9 @@ namespace Script.UI
         public static readonly Dictionary<GameObject, ShootEffect> ShootEffects = new();
 
         [SerializeField] private float speed;
+
+        private Vector3 targetPoint;
+        public float TimeTravel => Vector3.Distance(targetPoint,transform.position) / speed;
         private void Awake()
         {
             ShootEffects.Add(gameObject, this);
@@ -23,20 +26,21 @@ namespace Script.UI
 
         public void SetTrajectory(Vector3 start, Vector3 target)
         {
+            targetPoint = target;
             transform.position = start;
             Vector3 direction = target - transform.position;
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            StartCoroutine(Travel(target));
+            StartCoroutine(Travel());
         }
 
-        private IEnumerator Travel(Vector3 target)
+        private IEnumerator Travel()
         {
-            while (Vector3.Distance(transform.position, target) > 0.01f)
+            while (Vector3.Distance(transform.position, targetPoint) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target, speed * LevelManager.DeltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * LevelManager.DeltaTime);
                 yield return null;
             }
             LeanPool.Despawn(gameObject);

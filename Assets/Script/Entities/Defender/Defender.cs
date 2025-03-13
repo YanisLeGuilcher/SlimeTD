@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lean.Pool;
@@ -176,19 +177,33 @@ namespace Script.Entities.Defender
         {
             if(target.Dead)
                 return;
-            SpawnShootEffect();
+            if (shootEffectPrefab)
+            {
+                var go = LeanPool.Spawn(shootEffectPrefab);
+                if (ShootEffect.ShootEffects.TryGetValue(go, out var script))
+                {
+                    script.SetTrajectory(transform.position, target.transform.position);
+                    StartCoroutine(TakeDamageAfterTime(script.TimeTravel, target));
+                }
+                else
+                    Debug.LogWarning($"ShootEffect script for {go.name} not found");
+            }
+            else
+                target.TakeDamage(new Damage {Amount = damage, Type = damageType});
             
-            target.TakeDamage(new Damage {Amount = damage, Type = damageType});
             reload = 1 / fireRate;
         }
 
-        private void SpawnShootEffect()
+        private IEnumerator TakeDamageAfterTime(float time, Monster.Monster monster)
         {
-            var go = LeanPool.Spawn(shootEffectPrefab);
-            if (ShootEffect.ShootEffects.TryGetValue(go, out var script))
-                script.SetTrajectory(transform.position, target.transform.position);
-            else
-                Debug.LogWarning($"ShootEffect script for {go.name} not found");
+            float currentTime = 0;
+            while (currentTime < time)
+            {
+                yield return null;
+                currentTime += LevelManager.DeltaTime;
+            }
+            monster.TakeDamage(new Damage {Amount = damage, Type = damageType});
         }
+        
     }
 }

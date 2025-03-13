@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8039417225150891873}
   - component: {fileID: 1870049946445789514}
   m_Layer: 0
-  m_Name: ShootEffectBase
+  m_Name: shootEffectBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
