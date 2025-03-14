@@ -43,9 +43,9 @@ namespace Script.Manager
         
         public bool Paused { get; private set; }
 
-        public int Speed => Paused ? 0 : cacheSpeed;
-        public static float FixedDeltaTime => Instance.Speed * Time.fixedDeltaTime;
-        public static float DeltaTime => Instance.Speed * Time.deltaTime;
+        public static int Speed => Instance.Paused ? 0 : Instance.cacheSpeed;
+        public static float FixedDeltaTime => Speed * Time.fixedDeltaTime;
+        public static float DeltaTime => Speed * Time.deltaTime;
         private int cacheSpeed = 1;
 
         public static bool PlayerLoose => Instance.currentLifePoint <= 0;
