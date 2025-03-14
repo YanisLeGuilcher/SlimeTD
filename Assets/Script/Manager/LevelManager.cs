@@ -100,6 +100,12 @@ namespace Script.Manager
             {
                 if (EventSystem.current.IsPointerOverGameObject())
                     return;
+
+                if (ChoicePlacementDisplayed)
+                {
+                    RemoveChoiceOfPlacement();
+                    return;
+                }
                 
                 OnClick.Invoke();
                 
@@ -163,6 +169,8 @@ namespace Script.Manager
             placementChoice.gameObject.SetActive(true);
             placementChoice.anchoredPosition = position;
         }
+
+        private bool ChoicePlacementDisplayed => placementChoice.gameObject.activeSelf;
         
         private void RemoveChoiceOfPlacement()
         {
