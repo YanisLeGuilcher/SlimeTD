@@ -25,7 +25,7 @@ namespace Script.Entities.Monster
         [SerializeField] private int rank = 1;
         [SerializeField] private List<Tuple<DamageType,float>> weaknessTolerance;
         [SerializeField] private List<GameObject> dropOnDeath;
-        [SerializeField] private Animator animator;
+        [SerializeField] protected Animator animator;
         [SerializeField] private new Collider2D collider;
         
         public float Progress { get; private set; }
@@ -48,19 +48,19 @@ namespace Script.Entities.Monster
                 return 0f;
             }
         }
-        private SplineContainer splineContainer;
+        protected SplineContainer SplineContainer;
 
         private readonly int deathHash = Animator.StringToHash("Death");
         private readonly int hurtHash = Animator.StringToHash("Hurt");
 
         private float currentLife;
 
+        private void Awake() => Monsters.Add(gameObject,this);
 
-        private void Awake()
+        protected virtual void Start()
         {
             gameObject.layer = LayerMask.NameToLayer("Monster");
             collider.isTrigger = true;
-            Monsters.Add(gameObject,this);
         }
 
         private void OnDestroy()
@@ -77,7 +77,7 @@ namespace Script.Entities.Monster
 
         public void SetSpline(SplineContainer spline, float startProgress = 0)
         {
-            splineContainer = spline;
+            SplineContainer = spline;
             Progress = startProgress;
         }
 
@@ -85,14 +85,16 @@ namespace Script.Entities.Monster
         {
             if (Dead) 
                 return;
+
+            animator.speed = LevelManager.Speed;
             
-            Progress += speed / splineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
+            Progress += speed / SplineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
             if (Progress >= 1)
                 Finish.Invoke();
             else
             {
-                Vector3 positionWithoutOffset = splineContainer.Spline.EvaluatePosition(Progress);
-                Vector3 newPosition = positionWithoutOffset + splineContainer.transform.position;
+                Vector3 positionWithoutOffset = SplineContainer.Spline.EvaluatePosition(Progress);
+                Vector3 newPosition = positionWithoutOffset + SplineContainer.transform.position;
                 
                 TurnMesh((newPosition - transform.position).x > 0.01f);
                 
@@ -143,7 +145,7 @@ namespace Script.Entities.Monster
             
             foreach (var drop in dropOnDeath)
             {
-                var go = LeanPool.Spawn(drop, splineContainer.EvaluatePosition(0), Quaternion.identity);
+                var go = LeanPool.Spawn(drop, SplineContainer.EvaluatePosition(0), Quaternion.identity);
                 if (!Monsters.TryGetValue(go, out var script))
                 {
                     Debug.LogWarning($"Monster script for {go.name} not found");
@@ -153,7 +155,7 @@ namespace Script.Entities.Monster
                 float newProgress = Progress - 0.005f * round;
                 round++;
                 
-                script.SetSpline(splineContainer, newProgress);
+                script.SetSpline(SplineContainer, newProgress);
                 MonsterGenerator.Instance.AddMonster(script);
             }
             animator.Play(deathHash);
