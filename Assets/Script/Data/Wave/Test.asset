@@ -14,18 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveParts:
   - numberOfMonster: 1
-    monster: {fileID: 8424082848898548215, guid: e67833c10e956d7488792e995cfea797,
+    monster: {fileID: 8424082848898548215, guid: 0806feefcc4f8744cabb0abf0a6ab678,
       type: 3}
     timeBetweenMonster: 1
-  - numberOfMonster: 1
-    monster: {fileID: 8424082848898548215, guid: 38c3ea8e52fb032449f6dc9d628c4ee7,
-      type: 3}
-    timeBetweenMonster: 1
-  - numberOfMonster: 1
-    monster: {fileID: 8424082848898548215, guid: 95745308caba57a42b704ebdca415452,
-      type: 3}
-    timeBetweenMonster: 1
-  - numberOfMonster: 1
-    monster: {fileID: 8424082848898548215, guid: 3f9a542502c8b05448997f307c4c5aad,
-      type: 3}
-    timeBetweenMonster: 1
+  isInfiniteWave: 0
