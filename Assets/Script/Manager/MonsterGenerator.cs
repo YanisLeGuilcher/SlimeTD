@@ -21,17 +21,13 @@ namespace Script.Manager
         #endregion
 
         #region Private
-
         
-
         private readonly List<Monster> currentMonsters = new();
 
         private Coroutine spawningMonster;
 
         #endregion
-
         
-
         public int CurrentWave { get; private set; } = 1;
         
         #region Event
@@ -77,12 +73,8 @@ namespace Script.Manager
                     int round = 0;
                     while (wavePart.numberOfMonster > round)
                     {
-                        float tmpWait = wavePart.timeBetweenMonster;
-                        while (tmpWait >= 0)
-                        {
-                            yield return null;
-                            tmpWait -= LevelManager.DeltaTime;
-                        }
+                        yield return LevelManager.WaitForSecond(wavePart.timeBetweenMonster);
+
                         var chosenSpline = trajectories[round % trajectories.Count];
                         var go = LeanPool.Spawn(wavePart.monster, chosenSpline.EvaluatePosition(0), Quaternion.identity);
                         if (!Monster.Monsters.TryGetValue(go, out var script))
@@ -112,7 +104,7 @@ namespace Script.Manager
         {
             OnMonsterDie.Invoke(monster);
             currentMonsters.Remove(monster);
-            LeanPool.Despawn(monster, monster.DeathAnimationTime);
+            StartCoroutine(DespawnAfterSecond(monster, monster.DeathAnimationTime));
             if(currentMonsters.Count == 0 && spawningMonster == null)
                 OnWaveFinish.Invoke();
         }
@@ -124,6 +116,12 @@ namespace Script.Manager
             LeanPool.Despawn(monster);
             if(currentMonsters.Count == 0 && spawningMonster == null)
                 OnWaveFinish.Invoke();
+        }
+
+        private IEnumerator DespawnAfterSecond(Monster monster, float seconds)
+        {
+            yield return LevelManager.WaitForSecond(seconds);
+            LeanPool.Despawn(monster);
         }
     
 

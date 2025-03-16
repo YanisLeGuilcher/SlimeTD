@@ -83,10 +83,11 @@ namespace Script.Entities.Monster
 
         private void FixedUpdate()
         {
+            if(gameObject.activeSelf)
+                animator.speed = LevelManager.Speed;
+            
             if (Dead) 
                 return;
-
-            animator.speed = LevelManager.Speed;
             
             Progress += speed / SplineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
             if (Progress >= 1)

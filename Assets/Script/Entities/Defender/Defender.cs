@@ -196,12 +196,7 @@ namespace Script.Entities.Defender
 
         private IEnumerator TakeDamageAfterTime(float time, Monster.Monster monster)
         {
-            float currentTime = 0;
-            while (currentTime < time)
-            {
-                yield return null;
-                currentTime += LevelManager.DeltaTime;
-            }
+            yield return LevelManager.WaitForSecond(time);
             monster.TakeDamage(new Damage {Amount = damage, Type = damageType});
         }
         

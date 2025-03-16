@@ -1,3 +1,4 @@
+using System.Collections;
 using Script.Data;
 using Script.Entities.Defender;
 using Script.Entities.Monster;
@@ -5,15 +6,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Script.Manager
 {
     public class LevelManager : MonoBehaviour
     {
+        #region Static
+        
         public static readonly UnityEvent OnClick = new();
         
+        public static LevelManager Instance;
+        
+        public static int Speed => Instance.paused ? 0 : Instance.cacheSpeed;
+        public static float FixedDeltaTime => Speed * Time.fixedDeltaTime;
+        public static float DeltaTime => Speed * Time.deltaTime;
+        private int cacheSpeed = 1;
+        public static bool PlayerLoose => Instance.currentLifePoint <= 0;
+        
+        #endregion
+
+        #region SerializeField
+
         [Header("UI")]
         [SerializeField] private TMP_Text waveCount;
         [SerializeField] private TMP_Text lifePoint;
@@ -34,27 +48,23 @@ namespace Script.Manager
         [SerializeField] private float moneyEarnByWave = 100;
         [SerializeField] private float moneyEarnByWaveFactor = .01f;
 
+        #endregion
 
-        [SerializeField] private PlayerInput input;
+        #region Private
 
-        private int currentLifePoint = 100;
-        private int currentMoney = 400;
-
+        private int 
+            currentLifePoint = 100,
+            currentMoney = 400;
         
-        public bool Paused { get; private set; }
-
-        public static int Speed => Instance.Paused ? 0 : Instance.cacheSpeed;
-        public static float FixedDeltaTime => Speed * Time.fixedDeltaTime;
-        public static float DeltaTime => Speed * Time.deltaTime;
-        private int cacheSpeed = 1;
-
-        public static bool PlayerLoose => Instance.currentLifePoint <= 0;
-
-        public static LevelManager Instance;
-
         private Camera mainCamera;
 
-        private bool waveProcessing;
+        private bool 
+            waveProcessing,
+            paused;
+
+        #endregion
+        
+        #region UnityEventFunction
 
         private void Awake()
         {
@@ -93,7 +103,7 @@ namespace Script.Manager
         {
             if (Input.GetMouseButtonDown(1))
             {
-                RemoveChoiceOfPlacement();
+                ShowChoiceOfPlacement(false);
                 OnClick.Invoke();
             }
             if (Input.GetMouseButtonDown(0))
@@ -103,7 +113,7 @@ namespace Script.Manager
 
                 if (ChoicePlacementDisplayed)
                 {
-                    RemoveChoiceOfPlacement();
+                    ShowChoiceOfPlacement(false);
                     return;
                 }
                 
@@ -122,11 +132,40 @@ namespace Script.Manager
                     GiveChoiceOfPlacement(localPoint);
                 }
                 else
-                    RemoveChoiceOfPlacement();
+                    ShowChoiceOfPlacement(false);
             }
         }
 
-        public void UpdateWaveCount() => waveCount.text = monsterGenerator.CurrentWave.ToString();
+        #endregion
+
+        #region Tower
+
+        private bool ChoicePlacementDisplayed => placementChoice.gameObject.activeSelf;
+        
+        private void GiveChoiceOfPlacement(Vector2 position)
+        {
+            ShowChoiceOfPlacement();
+            placementChoice.anchoredPosition = position;
+        }
+
+        private void ShowChoiceOfPlacement(bool enable = true)
+        {
+            if(placementChoice.gameObject.activeSelf != enable)
+                placementChoice.gameObject.SetActive(enable);
+        }
+        
+        public void SpawnTower(TowerType type, Vector3 position)
+        {
+            int price = DataSerializer.GetPriceOfTower(type);
+            if(currentMoney < price)
+                return;
+            
+            currentMoney -= price;
+            money.text = currentMoney.ToString();
+            
+            Instantiate(PrefabFactory.Instance[type], position, Quaternion.identity);
+            placementChoice.gameObject.SetActive(false);
+        }
 
         public void UpgradeTower(Defender oldOne, TowerType newOne)
         {
@@ -142,7 +181,7 @@ namespace Script.Manager
             
             Destroy(oldOne.gameObject);
         }
-
+        
         public void SellTower(Defender defender)
         {
             currentMoney += defender.PriceOnSell;
@@ -150,34 +189,12 @@ namespace Script.Manager
             
             Destroy(defender.gameObject);
         }
-
-        public void SpawnTower(TowerType type, Vector3 position)
-        {
-            int price = DataSerializer.GetPriceOfTower(type);
-            if(currentMoney < price)
-                return;
-            
-            currentMoney -= price;
-            money.text = currentMoney.ToString();
-            
-            Instantiate(PrefabFactory.Instance[type], position, Quaternion.identity);
-            placementChoice.gameObject.SetActive(false);
-        }
-
-        private void GiveChoiceOfPlacement(Vector2 position)
-        {
-            placementChoice.gameObject.SetActive(true);
-            placementChoice.anchoredPosition = position;
-        }
-
-        private bool ChoicePlacementDisplayed => placementChoice.gameObject.activeSelf;
         
-        private void RemoveChoiceOfPlacement()
-        {
-            if(placementChoice.gameObject.activeSelf)
-                placementChoice.gameObject.SetActive(false);
-        }
 
+        #endregion
+        
+        #region Button
+        
         public void StartWave()
         {
             if(waveProcessing)
@@ -189,8 +206,33 @@ namespace Script.Manager
         }
 
         public void SetSpeed(int amount) => cacheSpeed = amount;
+        
+        public void ResumeGame() => ResumeGame(Speed == 0);
+        
+        public void ResumeGame(bool enable)
+        {
+            if (enable)
+            {
+                paused = false;
+                pausePanel.SetActive(false);
+            }
+            else
+            {
+                cacheSpeed = Speed;
+                paused = true;
+                pausePanel.SetActive(true);
+            }
+        }
+
+        public void Retry() => SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 
 
+        public void GoToMainMenu() => SceneManager.LoadSceneAsync(0);
+
+        #endregion
+        
+        public void UpdateWaveCount() => waveCount.text = monsterGenerator.CurrentWave.ToString();
+        
         private void MonsterDie(Monster monster)
         {
             currentMoney += monster.Money;
@@ -223,27 +265,17 @@ namespace Script.Manager
             money.text = currentMoney.ToString();
         }
 
-        public void ResumeGame() => ResumeGame(Speed == 0);
-        
-        public void ResumeGame(bool enable)
+        public static IEnumerator WaitForSecond(float seconds)
         {
-            if (enable)
+            float currentWait = 0;
+            while (currentWait < seconds)
             {
-                Paused = false;
-                pausePanel.SetActive(false);
-            }
-            else
-            {
-                cacheSpeed = Speed;
-                Paused = true;
-                pausePanel.SetActive(true);
+                yield return null;
+                currentWait += DeltaTime;
             }
         }
+
         
-        public void Retry() => SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-
-
-        public void GoToMainMenu() => SceneManager.LoadSceneAsync(0);
     }
 }
 

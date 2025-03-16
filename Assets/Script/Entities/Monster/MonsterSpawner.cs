@@ -39,23 +39,15 @@ namespace Script.Entities.Monster
         {
             while (Alive)
             {
-                float currentWait = 0;
-                while (currentWait < timeBetweenSummon)
-                {
-                    yield return null;
-                    currentWait += LevelManager.DeltaTime;
-                }
+                yield return LevelManager.WaitForSecond(timeBetweenSummon);
+                
                 if (Dead)
                     break;
                 
                 animator.Play(summonHash);
                 
-                currentWait = 0;
-                while (currentWait < summonDuration)
-                {
-                    yield return null;
-                    currentWait += LevelManager.DeltaTime;
-                }
+                yield return LevelManager.WaitForSecond(summonDuration);
+                
                 if (Dead)
                     break;
                 
