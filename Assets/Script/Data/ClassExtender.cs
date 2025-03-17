@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Script.Entities.Monster;
@@ -35,10 +36,10 @@ namespace Script.Data
         public static bool IsRoot(this Transform transform) => transform.root == transform;
 
         public static Monster Strongest(this IEnumerable<Monster> entities) =>
-            entities.Aggregate((max, p) => p.Rank > max.Rank ? p : max);
+            entities.Aggregate((max, p) => p.LifePoint > max.LifePoint ? p : max);
         
         public static Monster Weakest(this IEnumerable<Monster> entities) =>
-            entities.Aggregate((min, p) => p.Rank < min.Rank ? p : min);
+            entities.Aggregate((min, p) => p.LifePoint < min.LifePoint ? p : min);
         
         public static Monster LastInPosition(this IEnumerable<Monster> entities) =>
             entities.Aggregate((min, p) => p.Progress < min.Progress ? p : min);
@@ -49,6 +50,13 @@ namespace Script.Data
         public static bool Contains(this LayerMask layerMask, int layer) => (layerMask.value >> layer) % 2 == 1;
 
         public static bool Equals(this float a, float b, float epsilon) => Mathf.Abs(a - b) < epsilon;
+        
+        public static T Next<T>(this T src) where T : Enum
+        {
+            T[] values = (T[])Enum.GetValues(typeof(T));
+            int index = Array.IndexOf(values, src) + 1;
+            return values[index % values.Length];
+        }
 
     }
 }

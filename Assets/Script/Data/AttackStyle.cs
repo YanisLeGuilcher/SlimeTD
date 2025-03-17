@@ -7,6 +7,5 @@ namespace Script.Data
         Last,
         Strongest,
         Weakest,
-        Looser
     }
 }
