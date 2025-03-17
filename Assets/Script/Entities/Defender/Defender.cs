@@ -129,7 +129,7 @@ namespace Script.Entities.Defender
             
             upgradePanel.SetActive(true);
             rangePreview.enabled = true;
-            upgradeCanvas.sortingOrder = 600;
+            upgradeCanvas.sortingOrder = 1001;
             LevelManager.OnClick.Invoke(this);
         }
 
@@ -153,7 +153,7 @@ namespace Script.Entities.Defender
             
             upgradePanel.SetActive(false);
             rangePreview.enabled = false;
-            upgradeCanvas.sortingOrder = 500;
+            upgradeCanvas.sortingOrder = 1000;
         }
 
         private bool IsLookingAtTarget()
