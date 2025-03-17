@@ -2,7 +2,7 @@ namespace Script.Data
 {
     public struct Damage
     {
-        public float Amount;
+        public int Amount;
         public DamageType Type;
     }
 }

@@ -16,7 +16,7 @@ namespace Script.Entities.Defender
     public class Defender : MonoBehaviour
     {
         [Header("Stats")]
-        [SerializeField] private float damage = 1;
+        [SerializeField] private int damage = 1;
         [SerializeField] private float fireRate = 1;
         [SerializeField] private float range;
         [SerializeField] private float rotationSpeed = 1;

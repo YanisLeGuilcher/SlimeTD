@@ -19,7 +19,7 @@ namespace Script.Entities.Monster
         public static readonly Dictionary<GameObject,Monster> Monsters = new();
         
         
-        [SerializeField] private float life = 1;
+        [SerializeField] private int life = 1;
         [SerializeField] private int damageOnPass = 1;
         [SerializeField] private int moneyEarn = 1;
         [SerializeField] private float speed = 0.5f;
@@ -47,7 +47,7 @@ namespace Script.Entities.Monster
         private readonly int deathHash = Animator.StringToHash("Death");
         private readonly int hurtHash = Animator.StringToHash("Hurt");
 
-        public float LifePoint { get; private set; }
+        public int LifePoint { get; private set; }
 
         private float currentSpeed;
 
@@ -120,7 +120,7 @@ namespace Script.Entities.Monster
             
             var weak = weaknessTolerance.GetTupleOrDefault(damage.Type, 1);
  
-            damage.Amount *= weak;
+            damage.Amount = (int)(damage.Amount * weak);
             var damageRank = weak switch
             {
                 0 => DamageRank.None,
