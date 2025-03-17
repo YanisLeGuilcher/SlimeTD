@@ -104,7 +104,7 @@ namespace Script.Manager
         {
             OnMonsterDie.Invoke(monster);
             currentMonsters.Remove(monster);
-            StartCoroutine(DespawnAfterSecond(monster, monster.DeathAnimationTime));
+            LeanPool.Despawn(monster, monster.DeathAnimationTime / LevelManager.Speed);
             if(currentMonsters.Count == 0 && spawningMonster == null)
                 OnWaveFinish.Invoke();
         }
@@ -116,12 +116,6 @@ namespace Script.Manager
             LeanPool.Despawn(monster);
             if(currentMonsters.Count == 0 && spawningMonster == null)
                 OnWaveFinish.Invoke();
-        }
-
-        private IEnumerator DespawnAfterSecond(Monster monster, float seconds)
-        {
-            yield return LevelManager.WaitForSecond(seconds);
-            LeanPool.Despawn(monster);
         }
     
 

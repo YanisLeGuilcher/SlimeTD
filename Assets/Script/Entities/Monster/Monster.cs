@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Lean.Pool;
 using Script.Data;
@@ -38,16 +39,10 @@ namespace Script.Entities.Monster
         public bool Dead => currentLife <= 0;
         public bool Alive => currentLife > 0;
 
-        public float DeathAnimationTime
-        {
-            get
-            {
-                foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
-                    if (clip.name == "Death")
-                        return clip.length;
-                return 0f;
-            }
-        }
+
+        private ValueCalculator<float, Animator> deathAnimationTime;
+        public float DeathAnimationTime => deathAnimationTime.Value;
+        
         protected SplineContainer SplineContainer;
 
         private readonly int deathHash = Animator.StringToHash("Death");
@@ -55,7 +50,17 @@ namespace Script.Entities.Monster
 
         private float currentLife;
 
-        private void Awake() => Monsters.Add(gameObject,this);
+        private float currentSpeed;
+
+        private void Awake()
+        {
+            Monsters.Add(gameObject, this);
+            deathAnimationTime = new(
+                anim => anim.runtimeAnimatorController.animationClips
+                    .First(clip => clip.name == "Death").length,
+                animator
+            );
+        }
 
         protected virtual void Start()
         {
@@ -83,11 +88,14 @@ namespace Script.Entities.Monster
 
         private void FixedUpdate()
         {
-            if(gameObject.activeSelf)
-                animator.speed = LevelManager.Speed;
-            
             if (Dead) 
                 return;
+
+            if (currentSpeed.Equals(LevelManager.Speed, .1f))
+            {
+                currentSpeed = LevelManager.Speed;
+                animator.speed = LevelManager.Speed;
+            }
             
             Progress += speed / SplineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
             if (Progress >= 1)

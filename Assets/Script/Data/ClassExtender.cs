@@ -48,6 +48,8 @@ namespace Script.Data
 
         public static bool Contains(this LayerMask layerMask, int layer) => (layerMask.value >> layer) % 2 == 1;
 
+        public static bool Equals(this float a, float b, float epsilon) => Mathf.Abs(a - b) < epsilon;
+
     }
 }
 
