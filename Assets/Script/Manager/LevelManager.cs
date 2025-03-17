@@ -14,7 +14,7 @@ namespace Script.Manager
     {
         #region Static
         
-        public static readonly UnityEvent OnClick = new();
+        public static readonly UnityEvent<MonoBehaviour> OnClick = new();
         
         public static LevelManager Instance;
         
@@ -104,7 +104,7 @@ namespace Script.Manager
             if (Input.GetMouseButtonDown(1))
             {
                 ShowChoiceOfPlacement(false);
-                OnClick.Invoke();
+                OnClick.Invoke(this);
             }
             if (Input.GetMouseButtonDown(0))
             {
@@ -117,7 +117,7 @@ namespace Script.Manager
                     return;
                 }
                 
-                OnClick.Invoke();
+                OnClick.Invoke(this);
                 
                 Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, layerBlock);

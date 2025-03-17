@@ -15,20 +15,24 @@ namespace Script.Entities.Defender
     [RequireComponent(typeof(Rigidbody2D))]
     public class Defender : MonoBehaviour
     {
-        [SerializeField] private float range;
+        [Header("Stats")]
         [SerializeField] private float damage = 1;
         [SerializeField] private float fireRate = 1;
+        [SerializeField] private float range;
         [SerializeField] private float rotationSpeed = 1;
-        [SerializeField] private int priceOnSell = 200;
         [SerializeField] private DamageType damageType = DamageType.Classic;
-        [SerializeField] private CircleCollider2D rangeCollider;
-        [SerializeField] private SpriteRenderer rangePreview;
-        [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private AttackStyle attackStyle = AttackStyle.First;
-        [SerializeField] private TMP_Text sellCost;
-        [SerializeField] private GameObject mesh;
-        [SerializeField] private GameObject shootEffectPrefab;
 
+        [Header("Link")]
+        [SerializeField] private GameObject shootEffectPrefab;
+        [SerializeField] private Rigidbody2D rigidBody;
+        [SerializeField] private CircleCollider2D rangeCollider;
+
+        [Header("UI")]
+        [SerializeField] private GameObject mesh;
+        [SerializeField] private SpriteRenderer rangePreview;
+        [SerializeField] private TMP_Text sellCost;
+        [SerializeField] private TMP_Text attackStyleText;
         [SerializeField] private Canvas upgradeCanvas;
         [SerializeField] private GameObject upgradePanel;
 
@@ -42,7 +46,7 @@ namespace Script.Entities.Defender
         private Monster.Monster target;
 
 
-        public int PriceOnSell => priceOnSell;
+        public int PriceOnSell => (int)(DataSerializer.GetPriceOfTower(TowerType.Base) * .7f);
         
         private void Start()
         {
@@ -54,7 +58,8 @@ namespace Script.Entities.Defender
             rangeCollider.isTrigger = true;
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
 
-            sellCost.text = priceOnSell.ToString();
+            sellCost.text = PriceOnSell.ToString();
+            attackStyleText.text = attackStyle.ToString();
             
             LevelManager.OnClick.AddListener(CatchOtherClick);
         }
@@ -123,10 +128,17 @@ namespace Script.Entities.Defender
                 return;
             
             upgradePanel.SetActive(true);
+            rangePreview.enabled = true;
             upgradeCanvas.sortingOrder = 600;
+            LevelManager.OnClick.Invoke(this);
         }
 
-
+        public void SwitchAttackStyle()
+        {
+            attackStyle = attackStyle.Next();
+            attackStyleText.text = attackStyle.ToString();
+        }
+        
         public void Upgrade(int type)
         {
             LevelManager.Instance.UpgradeTower(this, (TowerType)Enum.ToObject(typeof(TowerType), type));
@@ -134,12 +146,13 @@ namespace Script.Entities.Defender
 
         public void Sell() => LevelManager.Instance.SellTower(this);
 
-        private void CatchOtherClick()
+        private void CatchOtherClick(MonoBehaviour clicker)
         {
-            if (!upgradePanel)
+            if (clicker == this || !upgradePanel)
                 return;
             
             upgradePanel.SetActive(false);
+            rangePreview.enabled = false;
             upgradeCanvas.sortingOrder = 500;
         }
 
@@ -175,7 +188,6 @@ namespace Script.Entities.Defender
                     AttackStyle.Last => monsterInRange.LastInPosition(),
                     AttackStyle.Strongest => monsterInRange.Strongest(),
                     AttackStyle.Weakest => monsterInRange.Weakest(),
-                    AttackStyle.Looser => monsterInRange.Weakest(),
                     _ => monsterInRange.First()
                 };
             } 
