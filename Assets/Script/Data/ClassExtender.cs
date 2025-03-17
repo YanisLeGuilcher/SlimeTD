@@ -35,11 +35,35 @@ namespace Script.Data
 
         public static bool IsRoot(this Transform transform) => transform.root == transform;
 
-        public static Monster Strongest(this IEnumerable<Monster> entities) =>
-            entities.Aggregate((max, p) => p.LifePoint > max.LifePoint ? p : max);
-        
-        public static Monster Weakest(this IEnumerable<Monster> entities) =>
-            entities.Aggregate((min, p) => p.LifePoint < min.LifePoint ? p : min);
+        public static Monster Strongest(this IEnumerable<Monster> entities)
+        {
+            return entities.Aggregate(new List<Monster>(), (strongest, current) =>
+            {
+                if (strongest.Count == 0 || current.LifePoint > strongest[0].LifePoint)
+                {
+                    strongest.Clear();
+                    strongest.Add(current);
+                }
+                else if (current.LifePoint == strongest[0].LifePoint)
+                    strongest.Add(current);
+                return strongest;
+            }).FirstInPosition();
+        }
+
+        public static Monster Weakest(this IEnumerable<Monster> entities)
+        {
+            return entities.Aggregate(new List<Monster>(), (weakest, current) =>
+            {
+                if (weakest.Count == 0 || current.LifePoint < weakest[0].LifePoint)
+                {
+                    weakest.Clear();
+                    weakest.Add(current);
+                }
+                else if (current.LifePoint == weakest[0].LifePoint)
+                    weakest.Add(current);
+                return weakest;
+            }).FirstInPosition();
+        }
         
         public static Monster LastInPosition(this IEnumerable<Monster> entities) =>
             entities.Aggregate((min, p) => p.Progress < min.Progress ? p : min);
