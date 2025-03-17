@@ -399,7 +399,7 @@ Transform:
   m_GameObject: {fileID: 2801063216530807582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.498013, y: 7.9226923, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -420,21 +420,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edeb16c7e28bfcb4596341ee41209094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 6
   damage: 20
   fireRate: 0.4
+  range: 6
   rotationSpeed: 2
-  priceOnSell: 300
   damageType: 0
-  rangeCollider: {fileID: 7309048618033034463}
-  rangePreview: {fileID: 2922483160457500784}
-  rigidBody: {fileID: 5525853940573244160}
   attackStyle: 0
-  sellCost: {fileID: 6342904831249552061}
-  attackStyleText: {fileID: 3150665183457474740}
-  mesh: {fileID: 2792115965091397858}
   shootEffectPrefab: {fileID: 5410567973748635214, guid: a120e80549f481b4186abaa36336ed3a,
     type: 3}
+  rigidBody: {fileID: 5525853940573244160}
+  rangeCollider: {fileID: 7309048618033034463}
+  mesh: {fileID: 2792115965091397858}
+  rangePreview: {fileID: 2922483160457500784}
+  sellCost: {fileID: 6342904831249552061}
+  attackStyleText: {fileID: 3150665183457474740}
   upgradeCanvas: {fileID: 189066271260227461}
   upgradePanel: {fileID: 6235526540023565698}
 --- !u!50 &5525853940573244160
@@ -1670,7 +1669,7 @@ Transform:
   m_GameObject: {fileID: 8552743726173571166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
