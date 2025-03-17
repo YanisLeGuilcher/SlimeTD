@@ -169,7 +169,6 @@ namespace Script.Manager
 
         public void UpgradeTower(Defender oldOne, TowerType newOne)
         {
-            Debug.Log(newOne);
             int price = DataSerializer.GetPriceOfTower(newOne);
             if(currentMoney < price)
                 return;

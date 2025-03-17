@@ -297,6 +297,7 @@ MonoBehaviour:
   mesh: {fileID: 2792115965091397858}
   shootEffectPrefab: {fileID: 5410567973748635214, guid: a120e80549f481b4186abaa36336ed3a,
     type: 3}
+  upgradeCanvas: {fileID: 189066271260227461}
   upgradePanel: {fileID: 6235526540023565698}
 --- !u!50 &5525853940573244160
 Rigidbody2D:

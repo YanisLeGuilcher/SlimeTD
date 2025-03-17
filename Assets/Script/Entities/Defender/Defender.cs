@@ -29,6 +29,7 @@ namespace Script.Entities.Defender
         [SerializeField] private GameObject mesh;
         [SerializeField] private GameObject shootEffectPrefab;
 
+        [SerializeField] private Canvas upgradeCanvas;
         [SerializeField] private GameObject upgradePanel;
 
 
@@ -118,20 +119,28 @@ namespace Script.Entities.Defender
 
         public void OnClick()
         {
-            if(upgradePanel)
-                upgradePanel.SetActive(true);
+            if (!upgradePanel)
+                return;
+            
+            upgradePanel.SetActive(true);
+            upgradeCanvas.sortingOrder = 600;
         }
 
 
-        public void Upgrade(int type) =>
+        public void Upgrade(int type)
+        {
             LevelManager.Instance.UpgradeTower(this, (TowerType)Enum.ToObject(typeof(TowerType), type));
+        }
 
         public void Sell() => LevelManager.Instance.SellTower(this);
 
         private void CatchOtherClick()
         {
-            if(upgradePanel)
-                upgradePanel.SetActive(false);
+            if (!upgradePanel)
+                return;
+            
+            upgradePanel.SetActive(false);
+            upgradeCanvas.sortingOrder = 500;
         }
 
         private bool IsLookingAtTarget()
