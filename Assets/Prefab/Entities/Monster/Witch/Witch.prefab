@@ -162,13 +162,11 @@ MonoBehaviour:
   speed: 1.1
   rank: 10
   weaknessTolerance: []
-  dropOnDeath: []
+  dropOnDeath: 
   animator: {fileID: 5988255605515244686}
   collider: {fileID: 3899273314788305543}
-  monsterToSpawn:
-  - {fileID: 8424082848898548215, guid: 81278ca260cbd594cbebc7af33b7b867, type: 3}
-  - {fileID: 8424082848898548215, guid: 81278ca260cbd594cbebc7af33b7b867, type: 3}
-  - {fileID: 8424082848898548215, guid: 81278ca260cbd594cbebc7af33b7b867, type: 3}
+  type: 12
+  monsterToSpawn: 08000000080000000a000000
   timeBetweenSummon: 7
 --- !u!58 &3899273314788305543
 CircleCollider2D:

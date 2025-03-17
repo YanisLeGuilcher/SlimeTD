@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
+using Script.Data;
 using Script.Manager;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Script.Entities.Monster
     [RequireComponent(typeof(Collider2D))]
     public class MonsterSpawner : Monster
     {
-        [SerializeField] private List<GameObject> monsterToSpawn;
+        [SerializeField] private List<MonsterType> monsterToSpawn;
         [SerializeField] private float timeBetweenSummon = 10;
 
         private readonly int summonHash = Animator.StringToHash("Summon");
@@ -55,10 +56,11 @@ namespace Script.Entities.Monster
                 
                 foreach (var drop in monsterToSpawn)
                 {
-                    var go = LeanPool.Spawn(drop, SplineContainer.EvaluatePosition(0), Quaternion.identity);
+                    var prefab = PrefabFactory.Instance[drop];
+                    var go = LeanPool.Spawn(prefab, SplineContainer.EvaluatePosition(0), Quaternion.identity);
                     if (!Monsters.TryGetValue(go, out var script))
                     {
-                        Debug.LogWarning($"Monster script for {go.name} not found");
+                        Debug.LogWarning($"Monster script for {drop} not found");
                         continue;
                     }
                     float newProgress = Progress - 0.005f * round;

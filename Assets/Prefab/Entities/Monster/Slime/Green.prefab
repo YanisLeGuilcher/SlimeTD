@@ -167,6 +167,7 @@ MonoBehaviour:
   - {fileID: 8424082848898548215, guid: 9fedc77047b44ac45bcd0900a7e108ad, type: 3}
   animator: {fileID: 5001511927352129354}
   collider: {fileID: 7908913424088150333}
+  type: 1
 --- !u!58 &7908913424088150333
 CircleCollider2D:
   m_ObjectHideFlags: 0

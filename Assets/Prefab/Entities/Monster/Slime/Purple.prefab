@@ -52,11 +52,10 @@ MonoBehaviour:
   speed: 2
   rank: 4
   weaknessTolerance: []
-  dropOnDeath:
-  - {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a, type: 3}
-  - {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a, type: 3}
+  dropOnDeath: 0200000002000000
   animator: {fileID: 785018065675348466}
   collider: {fileID: 2223969930064882956}
+  type: 3
 --- !u!58 &2223969930064882956
 CircleCollider2D:
   m_ObjectHideFlags: 0

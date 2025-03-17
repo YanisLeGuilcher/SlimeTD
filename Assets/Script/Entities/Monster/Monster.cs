@@ -23,21 +23,20 @@ namespace Script.Entities.Monster
         [SerializeField] private int damageOnPass = 1;
         [SerializeField] private int moneyEarn = 1;
         [SerializeField] private float speed = 0.5f;
-        [SerializeField] private int rank = 1;
         [SerializeField] private List<Tuple<DamageType,float>> weaknessTolerance;
-        [SerializeField] private List<GameObject> dropOnDeath;
+        [SerializeField] private List<MonsterType> dropOnDeath;
         [SerializeField] protected Animator animator;
         [SerializeField] private new Collider2D collider;
+        [SerializeField] private MonsterType type;
         
         public float Progress { get; private set; }
         public readonly UnityEvent Die = new();
         public readonly UnityEvent Finish = new();
-
-        public int Rank => rank;
+        
         public int Damage => damageOnPass;
         public int Money => moneyEarn;
-        public bool Dead => currentLife <= 0;
-        public bool Alive => currentLife > 0;
+        public bool Dead => LifePoint <= 0;
+        public bool Alive => LifePoint > 0;
 
 
         private ValueCalculator<float, Animator> deathAnimationTime;
@@ -48,7 +47,7 @@ namespace Script.Entities.Monster
         private readonly int deathHash = Animator.StringToHash("Death");
         private readonly int hurtHash = Animator.StringToHash("Hurt");
 
-        private float currentLife;
+        public float LifePoint { get; private set; }
 
         private float currentSpeed;
 
@@ -75,7 +74,7 @@ namespace Script.Entities.Monster
 
         private void OnEnable()
         {
-            currentLife = life;
+            LifePoint = life;
             Die.RemoveAllListeners();
             Finish.RemoveAllListeners();
         }
@@ -131,7 +130,7 @@ namespace Script.Entities.Monster
             };
             ShowDamage(damageRank, new BigInteger(damage.Amount));
 
-            currentLife -= damage.Amount;
+            LifePoint -= damage.Amount;
             if (Dead)
                 Death();
             else
@@ -154,10 +153,11 @@ namespace Script.Entities.Monster
             
             foreach (var drop in dropOnDeath)
             {
-                var go = LeanPool.Spawn(drop, SplineContainer.EvaluatePosition(0), Quaternion.identity);
+                var prefab = PrefabFactory.Instance[drop];
+                var go = LeanPool.Spawn(prefab, SplineContainer.EvaluatePosition(0), Quaternion.identity);
                 if (!Monsters.TryGetValue(go, out var script))
                 {
-                    Debug.LogWarning($"Monster script for {go.name} not found");
+                    Debug.LogWarning($"Monster script for {drop} not found");
                     return;
                 }
 
@@ -175,6 +175,8 @@ namespace Script.Entities.Monster
         {
             transform.rotation = right ? Quaternion.identity : Quaternion.Euler(new Vector3(0,180,0));
         }
+
+        public override string ToString() => type.ToString();
 
 #if UNITY_EDITOR
         [ContextMenu("Kill")]

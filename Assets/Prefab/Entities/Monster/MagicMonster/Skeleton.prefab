@@ -166,6 +166,7 @@ MonoBehaviour:
   dropOnDeath: []
   animator: {fileID: 5988255605515244686}
   collider: {fileID: 3899273314788305543}
+  type: 9
 --- !u!58 &3899273314788305543
 CircleCollider2D:
   m_ObjectHideFlags: 0
