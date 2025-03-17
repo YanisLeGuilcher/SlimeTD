@@ -11,6 +11,8 @@ namespace Script.UI
         public static readonly Dictionary<GameObject, ShootEffect> ShootEffects = new();
 
         [SerializeField] private float speed;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip shootClip;
 
         private Vector3 targetPoint;
         public float TimeTravel => Vector3.Distance(targetPoint,transform.position) / speed;
@@ -32,10 +34,18 @@ namespace Script.UI
 
         private IEnumerator Travel()
         {
+            if (audioSource && shootClip)
+            {
+                audioSource.pitch = LevelManager.Speed;
+                audioSource.PlayOneShot(shootClip);
+            }
+            
             while (Vector3.Distance(transform.position, targetPoint) > .01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * LevelManager.DeltaTime);
                 yield return null;
+                if (audioSource && shootClip)
+                    audioSource.pitch = LevelManager.Speed;
             }
             LeanPool.Despawn(gameObject);
         }
