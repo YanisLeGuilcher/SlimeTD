@@ -17,6 +17,7 @@ namespace Script.Manager
         #region SerialiseField
         
         [SerializeField] private List<SplineContainer> trajectories = new();
+        [SerializeField] private bool useProjectionWave;
 
         #endregion
 
@@ -61,19 +62,20 @@ namespace Script.Manager
 
         private IEnumerator RtnStartWave()
         {
-            currentMonsters.Clear();
-
-            var waveParts = DataSerializer.GetWave(CurrentWave);
+            Wave wave = DataSerializer.GetWave(useProjectionWave ? CurrentWave / 2 + 1 : CurrentWave);
+            
             bool isFirstSpawn = true;
-            while (isFirstSpawn || (waveParts.isInfiniteWave && !LevelManager.PlayerLoose))
+            while (isFirstSpawn || (wave.isInfiniteWave && !LevelManager.PlayerLoose))
             {
                 isFirstSpawn = false;
-                foreach (var wavePart in waveParts.waveParts)
+                foreach (var wavePart in wave.waveParts)
                 {
                     int round = 0;
-                    while (wavePart.numberOfMonster > round)
+                    int numberOfMonster = useProjectionWave ? wavePart.numberOfMonster * 2 : wavePart.numberOfMonster;
+                    while (numberOfMonster > round)
                     {
-                        yield return LevelManager.WaitForSecond(wavePart.timeBetweenMonster);
+                        float wait = useProjectionWave ? wavePart.timeBetweenMonster * .8f : wavePart.timeBetweenMonster;
+                        yield return LevelManager.WaitForSecond(wait);
 
                         var chosenSpline = trajectories[round % trajectories.Count];
                         var go = LeanPool.Spawn(wavePart.monster, chosenSpline.EvaluatePosition(0), Quaternion.identity);

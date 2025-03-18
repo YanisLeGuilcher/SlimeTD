@@ -84169,6 +84169,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1316091832}
     m_Modifications:
+    - target: {fileID: 5040593592222612236, guid: 38063e566ba46cb4894a78c4f6854f0a,
+        type: 3}
+      propertyPath: useProjectionWave
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7053490551934508260, guid: 38063e566ba46cb4894a78c4f6854f0a,
         type: 3}
       propertyPath: m_Name
