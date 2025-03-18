@@ -517,6 +517,9 @@ MonoBehaviour:
     second: 1.5
   - first: 3
     second: 1.5
+  boostedMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!50 &5525853940573244160
 Rigidbody2D:
   serializedVersion: 5
