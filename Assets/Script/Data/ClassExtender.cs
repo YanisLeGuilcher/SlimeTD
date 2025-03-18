@@ -75,11 +75,21 @@ namespace Script.Data
 
         public static bool Equals(this float a, float b, float epsilon) => Mathf.Abs(a - b) < epsilon;
         
-        public static T Next<T>(this T src) where T : Enum
+        public static T Next<T>(this T src) where T : System.Enum
         {
-            T[] values = (T[])Enum.GetValues(typeof(T));
+            T[] values = (T[])System.Enum.GetValues(typeof(T));
             int index = Array.IndexOf(values, src) + 1;
             return values[index % values.Length];
+        }
+        
+        public static Dictionary<T1, T2> ToDictionary<T1,T2>(this IEnumerable<Tuple<T1,T2>> tuples)
+        {
+            Dictionary<T1, T2> dico = new();
+
+            foreach (var tuple in tuples)
+                dico.Add(tuple.first,tuple.second);
+
+            return dico;
         }
 
     }
