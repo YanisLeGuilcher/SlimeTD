@@ -505,6 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 4
   rigidBody: {fileID: 5525853940573244160}
+  towerCollider: {fileID: 5802426406105090798}
   rangeCollider: {fileID: 6190318266429588734}
   rangePreview: {fileID: 2922483160457500784}
   sellCost: {fileID: 9089782545356959839}
@@ -1122,7 +1123,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 200
+  m_text: 150
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01bbaa472bb9e9a4d8422a63031bcfb7, type: 2}
   m_sharedMaterial: {fileID: 1310583128243131667, guid: 01bbaa472bb9e9a4d8422a63031bcfb7,
@@ -1781,7 +1782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 200
+  m_text: 150
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01bbaa472bb9e9a4d8422a63031bcfb7, type: 2}
   m_sharedMaterial: {fileID: 1310583128243131667, guid: 01bbaa472bb9e9a4d8422a63031bcfb7,

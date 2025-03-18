@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 200
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 01bbaa472bb9e9a4d8422a63031bcfb7, type: 2}
   m_sharedMaterial: {fileID: 1310583128243131667, guid: 01bbaa472bb9e9a4d8422a63031bcfb7,
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 7470245559688834620}
   - component: {fileID: 8349185670911608915}
   m_Layer: 5
-  m_Name: Damage
+  m_Name: ltimate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -565,6 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 4
   rigidBody: {fileID: 5525853940573244160}
+  towerCollider: {fileID: 5802426406105090798}
   rangeCollider: {fileID: 6190318266429588734}
   rangePreview: {fileID: 2922483160457500784}
   sellCost: {fileID: 9089782545356959839}

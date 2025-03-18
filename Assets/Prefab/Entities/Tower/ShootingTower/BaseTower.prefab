@@ -779,11 +779,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 4
   rigidBody: {fileID: 5525853940573244160}
+  towerCollider: {fileID: 3305195921174730077}
   rangeCollider: {fileID: 6190318266429588734}
   rangePreview: {fileID: 2922483160457500784}
   sellCost: {fileID: 9089782545356959839}
   upgradeCanvas: {fileID: 5804379966379855572}
   upgradePanel: {fileID: 372480803152114656}
+  towerType: 0
   damage: 3
   fireRate: 0.7
   rotationSpeed: 4

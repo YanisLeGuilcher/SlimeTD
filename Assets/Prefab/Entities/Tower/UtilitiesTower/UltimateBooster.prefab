@@ -293,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 4
   rigidBody: {fileID: 5525853940573244160}
+  towerCollider: {fileID: 5802426406105090798}
   rangeCollider: {fileID: 6190318266429588734}
   rangePreview: {fileID: 2922483160457500784}
   sellCost: {fileID: 9089782545356959839}

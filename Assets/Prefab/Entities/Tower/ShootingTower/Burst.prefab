@@ -503,6 +503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 3
   rigidBody: {fileID: 5525853940573244160}
+  towerCollider: {fileID: -3752506956942670581}
   rangeCollider: {fileID: 3687702552477443147}
   rangePreview: {fileID: 2922483160457500784}
   sellCost: {fileID: 699536298837067139}
