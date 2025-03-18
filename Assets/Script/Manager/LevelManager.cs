@@ -46,6 +46,7 @@ namespace Script.Manager
         [Header("Data")] 
         [SerializeField] private LayerMask layerAllow;
         [SerializeField] private LayerMask layerBlock;
+        [SerializeField] private int startMoney = 400;
         [SerializeField] private float moneyEarnByWave = 100;
         [SerializeField] private float moneyEarnByWaveFactor = .01f;
 
@@ -55,7 +56,7 @@ namespace Script.Manager
 
         private int 
             currentLifePoint = 100,
-            currentMoney = 400;
+            currentMoney;
         
         private Camera mainCamera;
 
@@ -75,6 +76,8 @@ namespace Script.Manager
                 Destroy(this);
                 return;
             }
+
+            currentMoney = startMoney;
 
             Instance = this;
             lifePoint.text = currentLifePoint.ToString();

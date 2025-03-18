@@ -26,8 +26,7 @@ namespace Script.Entities.Tower
         [SerializeField] private GameObject mesh;
         [SerializeField] private TMP_Text attackStyleText;
         
-
-
+        
         private readonly List<Monster.Monster> monsterInRange = new();
 
         private float reload;
@@ -36,15 +35,9 @@ namespace Script.Entities.Tower
 
         private Monster.Monster target;
 
-        public int Damage =>
-            (int)(damage * Bonus.GetValueOrDefault(Data.Enum.Bonus.Damage, new List<float> { 1f })
-                .Last());
-        public float FireRate =>
-            fireRate * Bonus.GetValueOrDefault(Data.Enum.Bonus.FireRate, new List<float> { 1f })
-                .Last();
-        public float RotationSpeed => 
-            rotationSpeed * Bonus.GetValueOrDefault(Data.Enum.Bonus.RotationSpeed, new List<float> { 1f })
-                .Last();
+        public int Damage => (int)(damage * Bonus[Data.Enum.Bonus.Damage].Last());
+        public float FireRate => fireRate * Bonus[Data.Enum.Bonus.FireRate].Last();
+        public float RotationSpeed => rotationSpeed * Bonus[Data.Enum.Bonus.RotationSpeed].Last();
 
 
         
@@ -53,6 +46,8 @@ namespace Script.Entities.Tower
             base.Start();
             
             attackStyleText.text = attackStyle.ToString();
+            
+            SetRangeLayer(LayerMask.NameToLayer("DefenderRange"));
         }
 
         
@@ -81,6 +76,8 @@ namespace Script.Entities.Tower
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if(other.gameObject.layer != LayerMask.NameToLayer("Monster"))
+                return;
             if (!Monster.Monster.Monsters.TryGetValue(other.gameObject, out var script))
             {
                 Debug.LogWarning($"Monster script for {other.name} not found");
@@ -97,6 +94,8 @@ namespace Script.Entities.Tower
 
         private void OnTriggerExit2D(Collider2D other)
         {
+            if(other.gameObject.layer != LayerMask.NameToLayer("Monster"))
+                return;
             if (!Monster.Monster.Monsters.TryGetValue(other.gameObject, out var script))
             {
                 Debug.LogWarning($"Monster script for {other.name} not found");

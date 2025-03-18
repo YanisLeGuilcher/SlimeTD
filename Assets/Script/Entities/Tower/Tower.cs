@@ -17,6 +17,7 @@ namespace Script.Entities.Tower
         
         [SerializeField] private float range;
         [SerializeField] private Rigidbody2D rigidBody;
+        [SerializeField] private CircleCollider2D towerCollider;
         [SerializeField] private CircleCollider2D rangeCollider;
         [SerializeField] private SpriteRenderer rangePreview;
         [SerializeField] private TMP_Text sellCost;
@@ -29,36 +30,48 @@ namespace Script.Entities.Tower
 
         public readonly UnityEvent OnSell = new();
 
-        public float Range => 
-            range * Bonus.GetValueOrDefault(Data.Enum.Bonus.Range, new List<float> { 1f })
-                .Last();
+        public float Range => range * Bonus[Data.Enum.Bonus.Range].Last();
 
         public int PriceOnSell => (int)(DataSerializer.GetPriceOfTower(towerType) * .7f);
-        
+
+        private void Awake()
+        {
+            ClearBoost();
+            
+            gameObject.layer = LayerMask.NameToLayer("Tower");
+            Towers.Add(gameObject, this);
+        }
+
         protected virtual void Start()
         {
-            Towers.Add(gameObject, this);
-            gameObject.layer = LayerMask.NameToLayer("Tower");
-            rangeCollider.gameObject.layer = LayerMask.NameToLayer("TowerRange");
-            rangeCollider.radius = range;
+            towerCollider.isTrigger = true;
             rangeCollider.isTrigger = true;
-            rigidBody.bodyType = RigidbodyType2D.Kinematic;
-            
-            rangePreview.transform.localScale = new Vector3(range*2, range*2, 1);
             rangePreview.enabled = false;
+            rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            RangeChange();
             
             sellCost.text = PriceOnSell.ToString();
             
-            
             LevelManager.OnClick.AddListener(CatchOtherClick);
+            Booster.ClearBoost.AddListener(ClearBoost);
+            
+            Booster.ResetBoost();
         }
         
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             Towers.Remove(gameObject);
             LevelManager.OnClick.RemoveListener(CatchOtherClick);
+            Booster.ClearBoost.RemoveListener(ClearBoost);
         }
-        
+
+        protected void SetRangeLayer(int layer) => rangeCollider.gameObject.layer = layer;
+
+        private void RangeChange()
+        {
+            rangeCollider.radius = Range;
+            rangePreview.transform.localScale = new Vector3(Range*2, Range*2, 1);
+        }
         
         public void OnClick()
         {
@@ -78,6 +91,7 @@ namespace Script.Entities.Tower
 
         public virtual void Sell()
         {
+            towerCollider.isTrigger = false;
             LevelManager.Instance.SellTower(this);
             OnSell.Invoke();
         }
@@ -92,6 +106,14 @@ namespace Script.Entities.Tower
             upgradeCanvas.sortingOrder = 1000;
         }
 
+        private void ClearBoost()
+        {
+            Bonus.Clear();
+            foreach (Bonus bonus in Enum.GetValues(typeof(Bonus)))
+                Bonus.Add(bonus, new() {1});
+            RangeChange();
+        }
+
         public void AddBonus(Booster booster)
         {
             var newBonus = booster.GivenBonus;
@@ -99,7 +121,9 @@ namespace Script.Entities.Tower
             {
                 Bonus[b.Key].Add(b.Value);
                 Bonus[b.Key].Sort();
-                booster.OnSell.AddListener(() => Bonus[b.Key].Remove(b.Value));
+
+                if (b.Key == Data.Enum.Bonus.Range)
+                    RangeChange();
             }
         }
     }
