@@ -4,7 +4,11 @@ namespace Script.Data.Enum
     {
         Base,
         Burst,
-        Rocket
+        Rocket,
+        BaseBooster,
+        DamageBooster,
+        FireRateBooster,
+        UltimateBooster
     }
 }
 
