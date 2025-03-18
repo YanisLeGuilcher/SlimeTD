@@ -41,19 +41,14 @@ namespace Script.Entities.Monster
         {
             while (Alive)
             {
-                yield return LevelManager.WaitForSecond(timeBetweenSummon);
-                
-                if (Dead)
-                    break;
-                
                 animator.Play(summonHash);
                 
                 yield return LevelManager.WaitForSecond(summonDuration);
                 
                 if (Dead)
                     break;
-                
-                int round = 0;
+
+                float spawnedProgress = Progress - .005f;
                 
                 foreach (var drop in monsterToSpawn)
                 {
@@ -64,12 +59,13 @@ namespace Script.Entities.Monster
                         Debug.LogWarning($"Monster script for {drop} not found");
                         continue;
                     }
-                    float newProgress = Progress - 0.005f * round;
-                    round++;
                 
-                    script.SetSpline(SplineContainer, newProgress);
+                    script.SetSpline(SplineContainer, spawnedProgress);
                     MonsterGenerator.Instance.AddMonster(script);
+                    spawnedProgress -= .005f;
                 }
+                
+                yield return LevelManager.WaitForSecond(timeBetweenSummon);
             }
         }
 
