@@ -28,5 +28,5 @@ MonoBehaviour:
   - numberOfMonster: 10
     monster: {fileID: 8424082848898548215, guid: ceed9af0cf13ea641875c95f60b3b44a,
       type: 3}
-    timeBetweenMonster: 1
+    timeBetweenMonster: 1.2
   isInfiniteWave: 0
