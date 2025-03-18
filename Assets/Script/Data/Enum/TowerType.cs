@@ -1,4 +1,4 @@
-namespace Script.Data
+namespace Script.Data.Enum
 {
     public enum TowerType
     {
