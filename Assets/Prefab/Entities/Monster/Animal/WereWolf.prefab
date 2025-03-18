@@ -160,9 +160,10 @@ MonoBehaviour:
   damageOnPass: 5
   moneyEarn: 3
   speed: 1.5
-  rank: 3
-  weaknessTolerance: []
-  dropOnDeath: []
+  weaknessTolerance:
+  - first: 1
+    second: 1.3
+  dropOnDeath: 
   animator: {fileID: 5988255605515244686}
   collider: {fileID: 3899273314788305543}
   type: 7

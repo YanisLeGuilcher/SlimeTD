@@ -299,7 +299,7 @@ MonoBehaviour:
   damage: 20
   fireRate: 0.4
   rotationSpeed: 2
-  damageType: 0
+  damageType: 3
   attackStyle: 0
   shootEffectPrefab: {fileID: 5410567973748635214, guid: a120e80549f481b4186abaa36336ed3a,
     type: 3}
