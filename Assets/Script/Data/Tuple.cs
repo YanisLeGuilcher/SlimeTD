@@ -1,3 +1,4 @@
+
 namespace Script.Data
 {
     [System.Serializable]

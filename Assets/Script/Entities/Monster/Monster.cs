@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Lean.Pool;
 using Script.Data;
+using Script.Data.Enum;
 using Script.Manager;
 using Script.UI;
 using UnityEngine;

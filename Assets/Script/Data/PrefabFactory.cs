@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Script.Data.Enum;
 using UnityEngine;
 
 namespace Script.Data

@@ -1,3 +1,5 @@
+using Script.Data.Enum;
+
 namespace Script.Data
 {
     public struct Damage
