@@ -508,6 +508,7 @@ MonoBehaviour:
   sellCost: {fileID: 699536298837067139}
   upgradeCanvas: {fileID: 2819757360878421311}
   upgradePanel: {fileID: 223305747474426682}
+  towerType: 1
   damage: 1
   fireRate: 2
   rotationSpeed: 8
