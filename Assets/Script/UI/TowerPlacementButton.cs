@@ -1,4 +1,5 @@
 using Script.Data;
+using Script.Data.Enum;
 using Script.Manager;
 using UnityEngine;
 

@@ -1,7 +1,8 @@
 using System.Collections;
 using Script.Data;
-using Script.Entities.Defender;
+using Script.Data.Enum;
 using Script.Entities.Monster;
+using Script.Entities.Tower;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -167,7 +168,7 @@ namespace Script.Manager
             placementChoice.gameObject.SetActive(false);
         }
 
-        public void UpgradeTower(Defender oldOne, TowerType newOne)
+        public void UpgradeTower(Tower oldOne, TowerType newOne)
         {
             int price = DataSerializer.GetPriceOfTower(newOne);
             if(currentMoney < price)
@@ -181,7 +182,7 @@ namespace Script.Manager
             Destroy(oldOne.gameObject);
         }
         
-        public void SellTower(Defender defender)
+        public void SellTower(Tower defender)
         {
             currentMoney += defender.PriceOnSell;
             money.text = Instance.currentMoney.ToString();

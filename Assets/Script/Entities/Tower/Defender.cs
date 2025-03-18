@@ -1,40 +1,31 @@
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lean.Pool;
 using Script.Data;
+using Script.Data.Enum;
 using Script.Manager;
 using Script.UI;
 using TMPro;
 using UnityEngine;
 
-namespace Script.Entities.Defender
+namespace Script.Entities.Tower
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Defender : MonoBehaviour
+    public class Defender : Tower
     {
         [Header("Stats")]
         [SerializeField] private int damage = 1;
         [SerializeField] private float fireRate = 1;
-        [SerializeField] private float range;
         [SerializeField] private float rotationSpeed = 1;
         [SerializeField] private DamageType damageType = DamageType.Classic;
         [SerializeField] private AttackStyle attackStyle = AttackStyle.First;
-
-        [Header("Link")]
-        [SerializeField] private GameObject shootEffectPrefab;
-        [SerializeField] private Rigidbody2D rigidBody;
-        [SerializeField] private CircleCollider2D rangeCollider;
-
+        
         [Header("UI")]
+        [SerializeField] private GameObject shootEffectPrefab;
         [SerializeField] private GameObject mesh;
-        [SerializeField] private SpriteRenderer rangePreview;
-        [SerializeField] private TMP_Text sellCost;
         [SerializeField] private TMP_Text attackStyleText;
-        [SerializeField] private Canvas upgradeCanvas;
-        [SerializeField] private GameObject upgradePanel;
+        
 
 
         private readonly List<Monster.Monster> monsterInRange = new();
@@ -45,29 +36,26 @@ namespace Script.Entities.Defender
 
         private Monster.Monster target;
 
+        public int Damage =>
+            (int)(damage * Bonus.GetValueOrDefault(Data.Enum.Bonus.Damage, new List<float> { 1f })
+                .Last());
+        public float FireRate =>
+            fireRate * Bonus.GetValueOrDefault(Data.Enum.Bonus.FireRate, new List<float> { 1f })
+                .Last();
+        public float RotationSpeed => 
+            rotationSpeed * Bonus.GetValueOrDefault(Data.Enum.Bonus.RotationSpeed, new List<float> { 1f })
+                .Last();
 
-        public int PriceOnSell => (int)(DataSerializer.GetPriceOfTower(TowerType.Base) * .7f);
+
         
-        private void Start()
+        protected override void Start()
         {
-            rangeCollider.gameObject.layer = LayerMask.NameToLayer("TowerRange");
-            gameObject.layer = LayerMask.NameToLayer("Tower");
-            rangeCollider.radius = range;
-            rangePreview.transform.localScale = new Vector3(range*2, range*2, 1);
-            rangePreview.enabled = false;
-            rangeCollider.isTrigger = true;
-            rigidBody.bodyType = RigidbodyType2D.Kinematic;
-
-            sellCost.text = PriceOnSell.ToString();
-            attackStyleText.text = attackStyle.ToString();
+            base.Start();
             
-            LevelManager.OnClick.AddListener(CatchOtherClick);
+            attackStyleText.text = attackStyle.ToString();
         }
 
-        private void OnDestroy()
-        {
-            LevelManager.OnClick.RemoveListener(CatchOtherClick);
-        }
+        
 
         private void FixedUpdate()
         {
@@ -121,39 +109,10 @@ namespace Script.Entities.Defender
             target = SearchTarget();
         }
 
-
-        public void OnClick()
-        {
-            if (!upgradePanel)
-                return;
-            
-            upgradePanel.SetActive(true);
-            rangePreview.enabled = true;
-            upgradeCanvas.sortingOrder = 1001;
-            LevelManager.OnClick.Invoke(this);
-        }
-
         public void SwitchAttackStyle()
         {
             attackStyle = attackStyle.Next();
             attackStyleText.text = attackStyle.ToString();
-        }
-        
-        public void Upgrade(int type)
-        {
-            LevelManager.Instance.UpgradeTower(this, (TowerType)Enum.ToObject(typeof(TowerType), type));
-        }
-
-        public void Sell() => LevelManager.Instance.SellTower(this);
-
-        private void CatchOtherClick(MonoBehaviour clicker)
-        {
-            if (clicker == this || !upgradePanel)
-                return;
-            
-            upgradePanel.SetActive(false);
-            rangePreview.enabled = false;
-            upgradeCanvas.sortingOrder = 1000;
         }
 
         private bool IsLookingAtTarget()
@@ -175,7 +134,7 @@ namespace Script.Entities.Defender
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
 
-            mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, targetRotation, rotationSpeed * LevelManager.FixedDeltaTime);
+            mesh.transform.rotation = Quaternion.Lerp(mesh.transform.rotation, targetRotation, RotationSpeed * LevelManager.FixedDeltaTime);
         }
 
         private Monster.Monster SearchTarget()
@@ -210,15 +169,15 @@ namespace Script.Entities.Defender
                     Debug.LogWarning($"ShootEffect script for {go.name} not found");
             }
             else
-                target.TakeDamage(new Damage {Amount = damage, Type = damageType});
+                target.TakeDamage(new Damage {Amount = Damage, Type = damageType});
             
-            reload = 1 / fireRate;
+            reload = 1 / FireRate;
         }
 
         private IEnumerator TakeDamageAfterTime(float time, Monster.Monster monster)
         {
             yield return LevelManager.WaitForSecond(time);
-            monster.TakeDamage(new Damage {Amount = damage, Type = damageType});
+            monster.TakeDamage(new Damage {Amount = Damage, Type = damageType});
         }
         
     }
