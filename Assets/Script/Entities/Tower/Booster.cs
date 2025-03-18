@@ -8,7 +8,7 @@ namespace Script.Entities.Tower
 {
     public class Booster : Tower
     {
-        public static readonly UnityEvent AttributeBoost = new();
+        private static readonly UnityEvent AttributeBoost = new();
         public static readonly UnityEvent ClearBoost = new();
 
         public static void ResetBoost()
@@ -26,7 +26,7 @@ namespace Script.Entities.Tower
         protected override void Start()
         {
             SetRangeLayer(LayerMask.NameToLayer("BoosterRange"));
-            AttributeBoost.AddListener(RefreshBoost);
+            AttributeBoost.AddListener(GiveBoost);
             
             base.Start();
         }
@@ -35,11 +35,11 @@ namespace Script.Entities.Tower
         {
             base.OnDestroy();
             
-            AttributeBoost.RemoveListener(RefreshBoost);
+            AttributeBoost.RemoveListener(GiveBoost);
             ResetBoost();
         }
 
-        private void RefreshBoost()
+        private void GiveBoost()
         {
             var colliders = Physics2D.OverlapCircleAll(transform.position, Range, boostedMask);
             
