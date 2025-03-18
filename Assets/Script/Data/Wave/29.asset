@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d24cb8c042a384089af179033aa9d9, type: 3}
+  m_Name: 29
+  m_EditorClassIdentifier: 
+  waveParts:
+  - numberOfMonster: 10
+    monster: {fileID: 8424082848898548215, guid: e67833c10e956d7488792e995cfea797,
+      type: 3}
+    timeBetweenMonster: 1
+  - numberOfMonster: 10
+    monster: {fileID: 8424082848898548215, guid: 38c3ea8e52fb032449f6dc9d628c4ee7,
+      type: 3}
+    timeBetweenMonster: 1
+  - numberOfMonster: 10
+    monster: {fileID: 8424082848898548215, guid: 95745308caba57a42b704ebdca415452,
+      type: 3}
+    timeBetweenMonster: 1
