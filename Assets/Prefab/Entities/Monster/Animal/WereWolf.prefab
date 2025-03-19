@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eeff6a0f39b21409868cda3848f991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 15
+  life: 60
   damageOnPass: 5
   moneyEarn: 3
   speed: 1.5

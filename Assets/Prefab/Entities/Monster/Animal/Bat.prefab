@@ -157,13 +157,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eeff6a0f39b21409868cda3848f991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 3
+  life: 20
   damageOnPass: 1
   moneyEarn: 1
   speed: 2
-  rank: 1
   weaknessTolerance: []
-  dropOnDeath: []
+  dropOnDeath: 
   animator: {fileID: 5988255605515244686}
   collider: {fileID: 3899273314788305543}
   type: 4
