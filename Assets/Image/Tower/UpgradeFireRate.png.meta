@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3d73472ff8fb3c84593c55f39bbb8837
+guid: e19736666ce804843804e480b54cb275
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4893907754814711077
-    second: Burst_0
+      213: 6396313187731435352
+    second: UpgradeFireRate_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -101,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Burst_0
+      name: UpgradeFireRate_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 525a2498c27aae340800000000000000
-      internalID: 4893907754814711077
+      spriteID: 85fe0e284f444c850800000000000000
+      internalID: 6396313187731435352
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Burst_0: 4893907754814711077
+      UpgradeFireRate_0: 6396313187731435352
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

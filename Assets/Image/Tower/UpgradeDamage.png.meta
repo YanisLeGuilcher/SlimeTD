@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0ac2f4dc186166a47aeaf77c9bb5aeaf
+guid: 5b6349d332b9173459d28421110af8d6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1092933655907818480
-    second: BaseTower_0
+      213: 6098312043139156609
+    second: UpgradeDamage_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BaseTower_0
+      name: UpgradeDamage_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 3
+        y: 0
         width: 64
-        height: 75
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0fb54739e51ea2f00800000000000000
-      internalID: 1092933655907818480
+      spriteID: 18acbc43e7e81a450800000000000000
+      internalID: 6098312043139156609
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BaseTower_0: 1092933655907818480
+      UpgradeDamage_0: 6098312043139156609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0ac2f4dc186166a47aeaf77c9bb5aeaf
+guid: 24dd6f248a6e1e043a7c60e492743112
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1092933655907818480
-    second: BaseTower_0
+      213: -7307385298163248807
+    second: BurstTower_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BaseTower_0
+      name: BurstTower_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0fb54739e51ea2f00800000000000000
-      internalID: 1092933655907818480
+      spriteID: 951511a99c3f69a90800000000000000
+      internalID: -7307385298163248807
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BaseTower_0: 1092933655907818480
+      BurstTower_0: -7307385298163248807
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

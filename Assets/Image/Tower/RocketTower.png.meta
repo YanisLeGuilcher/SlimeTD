@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 74da2ccc7cb3b9a4180a10af92e281be
+guid: fe884cf48c774d44ba15573b79eb06b6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6711257252158638106
-    second: Rocket_0
+      213: -2858385980170815410
+    second: RocketTower_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -101,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rocket_0
+      name: RocketTower_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 32
-        height: 32
+        y: 3
+        width: 64
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a180e2fb9ec232d50800000000000000
-      internalID: 6711257252158638106
+      spriteID: e4836fc6819f458d0800000000000000
+      internalID: -2858385980170815410
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Rocket_0: 6711257252158638106
+      RocketTower_0: -2858385980170815410
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
