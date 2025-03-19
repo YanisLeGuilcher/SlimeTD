@@ -41,6 +41,11 @@ namespace Script.Entities.Monster
         {
             while (Alive)
             {
+                yield return LevelManager.WaitForSecond(timeBetweenSummon);
+                
+                if (Dead)
+                    break;
+                
                 animator.Play(summonHash);
                 
                 yield return LevelManager.WaitForSecond(summonDuration);
@@ -64,11 +69,8 @@ namespace Script.Entities.Monster
                     MonsterGenerator.Instance.AddMonster(script);
                     spawnedProgress -= .005f;
                 }
-                
-                yield return LevelManager.WaitForSecond(timeBetweenSummon);
             }
         }
-
     }
 }
 
