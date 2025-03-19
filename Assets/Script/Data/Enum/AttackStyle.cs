@@ -7,5 +7,6 @@ namespace Script.Data.Enum
         Last,
         Strongest,
         Weakest,
+        Spawner
     }
 }

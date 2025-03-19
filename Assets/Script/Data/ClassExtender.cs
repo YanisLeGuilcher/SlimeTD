@@ -66,6 +66,31 @@ namespace Script.Data
             }).FirstInPosition();
         }
         
+        public static Monster Spawner(this IEnumerable<Monster> entities)
+        {
+            Monster target = null;
+            bool withSpawner = false;
+            foreach (var entity in entities)
+            {
+                if (entity is MonsterSpawner)
+                {
+                    withSpawner = true;
+                    if (target && target.Progress < entity.Progress)
+                        target = entity;
+                    else
+                        target = entity;
+                }
+                else if (!withSpawner)
+                {
+                    if (target && target.Progress < entity.Progress)
+                        target = entity;
+                    else
+                        target = entity;
+                }
+            }
+            return target;
+        }
+        
         public static Monster LastInPosition(this IEnumerable<Monster> entities) =>
             entities.Aggregate((min, p) => p.Progress < min.Progress ? p : min);
         

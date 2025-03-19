@@ -146,6 +146,7 @@ namespace Script.Entities.Tower
                     AttackStyle.Last => monsterInRange.LastInPosition(),
                     AttackStyle.Strongest => monsterInRange.Strongest(),
                     AttackStyle.Weakest => monsterInRange.Weakest(),
+                    AttackStyle.Spawner => monsterInRange.Spawner(),
                     _ => monsterInRange.First()
                 };
             } 
