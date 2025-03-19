@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using Lean.Pool;
+using Script.Manager;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,9 +20,6 @@ namespace Script.UI
         [SerializeField] private float duration = 1;
         [SerializeField] private float fadeDuration = 1;
 
-        private float currentDuration;
-        private float currentFadeDuration;
-
         private Color baseColor;
     
         public void SetAmount(BigInteger amount) => text.text = amount >= 1000 ? $"{amount/1000}K" : $"{amount}";
@@ -32,37 +30,33 @@ namespace Script.UI
             DamageUIEffects.Add(gameObject, this);
         }
 
-        private void OnDestroy()
-        {
-            DamageUIEffects.Remove(gameObject);
-        }
+        private void OnDestroy() => DamageUIEffects.Remove(gameObject);
 
         private void OnEnable()
         {
             text.color = baseColor;
-            currentDuration = duration;
-            currentFadeDuration = fadeDuration;
             StartCoroutine(Fade());
         }
 
         private IEnumerator Fade()
         {
+            float currentDuration = duration;
             Vector3 translation = Random.onUnitSphere.normalized * translationSpeed;
             while (currentDuration > 0)
             {
-                transform.Translate(translation * Time.deltaTime);
+                transform.Translate(translation * LevelManager.DeltaTime);
                 yield return null;
-                currentDuration -= Time.deltaTime;
+                currentDuration -= LevelManager.DeltaTime;
             }
-            float maxFadeDuration = currentFadeDuration;
+            float currentFadeDuration = fadeDuration;
             while (currentFadeDuration > 0)
             {
                 var tmp = text.color;
-                tmp.a = currentFadeDuration / maxFadeDuration;
+                tmp.a = currentFadeDuration / fadeDuration;
                 text.color = tmp;
-                transform.Translate(translation * Time.deltaTime);
+                transform.Translate(translation * LevelManager.DeltaTime);
                 yield return null;
-                currentFadeDuration -= Time.deltaTime;
+                currentFadeDuration -= LevelManager.DeltaTime;
             }
             var endColor = text.color;
             endColor.a = 0;
