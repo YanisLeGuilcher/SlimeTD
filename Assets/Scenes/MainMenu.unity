@@ -519,6 +519,7 @@ MonoBehaviour:
   - first: 6
     second: 300
   waves:
+  - {fileID: 11400000, guid: e3515636c693573418a7dba6dceee048, type: 2}
   - {fileID: 11400000, guid: a926cd20a4f700c4cacd7c3a182ff6dd, type: 2}
   - {fileID: 11400000, guid: a6267f2b32672644cb2681bd43db0c0c, type: 2}
   - {fileID: 11400000, guid: 4cf9e292334f1134e8f6e3bc8eaa8fda, type: 2}
