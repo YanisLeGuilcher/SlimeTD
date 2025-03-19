@@ -1,10 +1,19 @@
 # ninja log v5
 10	1300	7640236069349665	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	fde1dea2976b92e4
 18	1315	7640236069445846	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	7ee98c8d2eca96c3
-4	1319	7640236069541136	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	67f1cc02ab8a98c3
-27	1335	7640236069731901	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9325d71d97b55f82
-1	1408	7640236070480185	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	8814b0794cf8eb7f
 22	1444	7640236070840012	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4240ab457dc72d83
+4	1319	7640236069541136	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	67f1cc02ab8a98c3
+1	1408	7640236070480185	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	8814b0794cf8eb7f
+27	1335	7640236069731901	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9325d71d97b55f82
 14	1639	7640236072807470	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	6308088f13015989
-7	1737	7640236073787384	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	70fc21bb70ff22ea
 1737	1815	7640236074600922	C:/Users/yanis/UnityProject/SlimeTD/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/5gs3054n/obj/arm64-v8a/libgame.so	92ae0d22a223d702
+7	1737	7640236073787384	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	70fc21bb70ff22ea
+15	1124	7641109305806247	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	7ee98c8d2eca96c3
+10	1127	7641109305851429	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	fde1dea2976b92e4
+8	1150	7641109306062909	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	67f1cc02ab8a98c3
+21	1152	7641109306115271	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9325d71d97b55f82
+24	1214	7641109306689571	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4240ab457dc72d83
+13	1224	7641109306795361	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	8814b0794cf8eb7f
+18	1365	7641109308261027	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	6308088f13015989
+4	1439	7641109308985902	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	70fc21bb70ff22ea
+1439	1523	7641109309848530	C:/Users/yanis/UnityProject/SlimeTD/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/5gs3054n/obj/arm64-v8a/libgame.so	92ae0d22a223d702
