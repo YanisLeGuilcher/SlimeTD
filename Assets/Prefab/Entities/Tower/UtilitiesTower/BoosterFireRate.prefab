@@ -579,7 +579,7 @@ MonoBehaviour:
   - first: 3
     second: 1.5
   - first: 1
-    second: 2
+    second: 1.6
   boostedMask:
     serializedVersion: 2
     m_Bits: 1024
