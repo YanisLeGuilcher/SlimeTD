@@ -17,19 +17,19 @@ MonoBehaviour:
     monster: {fileID: 8424082848898548215, guid: 5a7ac4b2d62167e44948f5ffb6b87cbf,
       type: 3}
     timeBetweenMonster: 1
-  - numberOfMonster: 15
-    monster: {fileID: 8424082848898548215, guid: 81278ca260cbd594cbebc7af33b7b867,
-      type: 3}
-    timeBetweenMonster: 1
-  - numberOfMonster: 10
-    monster: {fileID: 8424082848898548215, guid: 0806feefcc4f8744cabb0abf0a6ab678,
-      type: 3}
-    timeBetweenMonster: 1
   - numberOfMonster: 10
     monster: {fileID: 8424082848898548215, guid: ceed9af0cf13ea641875c95f60b3b44a,
       type: 3}
     timeBetweenMonster: 1.2
-  - numberOfMonster: 10
+  - numberOfMonster: 15
+    monster: {fileID: 8424082848898548215, guid: 81278ca260cbd594cbebc7af33b7b867,
+      type: 3}
+    timeBetweenMonster: 1
+  - numberOfMonster: 5
+    monster: {fileID: 8424082848898548215, guid: 0806feefcc4f8744cabb0abf0a6ab678,
+      type: 3}
+    timeBetweenMonster: 1
+  - numberOfMonster: 5
     monster: {fileID: 8424082848898548215, guid: 25c8ee97fbf729a4494bbbfb80040d79,
       type: 3}
     timeBetweenMonster: 1

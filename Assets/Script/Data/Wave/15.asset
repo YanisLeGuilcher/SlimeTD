@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: 15
   m_EditorClassIdentifier: 
   waveParts:
+  - numberOfMonster: 10
+    monster: {fileID: 8424082848898548215, guid: ceed9af0cf13ea641875c95f60b3b44a,
+      type: 3}
+    timeBetweenMonster: 1.2
   - numberOfMonster: 20
     monster: {fileID: 8424082848898548215, guid: 5a7ac4b2d62167e44948f5ffb6b87cbf,
       type: 3}
@@ -25,8 +29,4 @@ MonoBehaviour:
     monster: {fileID: 8424082848898548215, guid: 5a7ac4b2d62167e44948f5ffb6b87cbf,
       type: 3}
     timeBetweenMonster: 1
-  - numberOfMonster: 10
-    monster: {fileID: 8424082848898548215, guid: ceed9af0cf13ea641875c95f60b3b44a,
-      type: 3}
-    timeBetweenMonster: 1.2
   isInfiniteWave: 0

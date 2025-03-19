@@ -20,7 +20,7 @@ MonoBehaviour:
   - numberOfMonster: 10
     monster: {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a,
       type: 3}
-    timeBetweenMonster: 1
+    timeBetweenMonster: 0.5
   - numberOfMonster: 10
     monster: {fileID: 6777909432648081452, guid: ad5bfc44784cc4843aefa34319e8ca65,
       type: 3}
@@ -28,5 +28,5 @@ MonoBehaviour:
   - numberOfMonster: 15
     monster: {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a,
       type: 3}
-    timeBetweenMonster: 1
+    timeBetweenMonster: 0.5
   isInfiniteWave: 0
