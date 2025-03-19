@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Script.Entities.Monster;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Script.Data
 {
@@ -91,6 +92,24 @@ namespace Script.Data
 
             return dico;
         }
+        
+        
+        public static bool IsPointerOverUIExcludingSortingLayer(this EventSystem eventSys, int sortingLayerToIgnore)
+        {
+            var eventData = new PointerEventData(eventSys)
+            {
+                position = Input.mousePosition
+            };
+            var results = new List<RaycastResult>();
+            eventSys.RaycastAll(eventData, results);
+
+            foreach (var result in results)
+                if (result.gameObject.layer != sortingLayerToIgnore)
+                    return true;
+            
+            return false;
+        }
+
 
     }
 }

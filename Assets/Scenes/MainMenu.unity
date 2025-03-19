@@ -503,6 +503,21 @@ MonoBehaviour:
     second: 150
   - first: 6
     second: 100
+  towerSellPrice:
+  - first: 0
+    second: 220
+  - first: 1
+    second: 450
+  - first: 2
+    second: 400
+  - first: 3
+    second: 120
+  - first: 5
+    second: 220
+  - first: 4
+    second: 220
+  - first: 6
+    second: 300
   waves:
   - {fileID: 11400000, guid: a926cd20a4f700c4cacd7c3a182ff6dd, type: 2}
   - {fileID: 11400000, guid: a6267f2b32672644cb2681bd43db0c0c, type: 2}

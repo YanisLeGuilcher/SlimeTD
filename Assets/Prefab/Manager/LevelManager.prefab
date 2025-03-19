@@ -991,12 +991,9 @@ MonoBehaviour:
   startWave: {fileID: 8694028305500093234}
   selectSpeed: {fileID: 5428637399946457445}
   placementChoice: {fileID: 6946248760099276148}
-  layerAllow:
-    serializedVersion: 2
-    m_Bits: 256
   layerBlock:
     serializedVersion: 2
-    m_Bits: 1824
+    m_Bits: 1536
   startMoney: 400
   moneyEarnByWave: 100
   moneyEarnByWaveFactor: 0.01
@@ -1011,7 +1008,7 @@ GameObject:
   - component: {fileID: 7739946620817916600}
   - component: {fileID: 4133486475159943424}
   - component: {fileID: 3316226371405369002}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1332,7 +1329,7 @@ GameObject:
   - component: {fileID: 5037550744524950114}
   - component: {fileID: 2420932741386570541}
   - component: {fileID: 7625415216308868350}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1527,7 +1524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ac2f4dc186166a47aeaf77c9bb5aeaf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d36a84a2ceab41a4f96976832b7589a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1615,7 +1612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7649782066157325652}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: PV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1654,7 +1651,7 @@ GameObject:
   - component: {fileID: 9011072981287951443}
   - component: {fileID: 6335752221420606319}
   - component: {fileID: 3291290527059048937}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1968,7 +1965,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -100, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8634207443516494034
 CanvasRenderer:
@@ -2536,7 +2533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9027646488960414205}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2843,7 +2840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 363397744196169543}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3034,7 +3031,7 @@ GameObject:
   - component: {fileID: 551505389133781626}
   - component: {fileID: 3600800678421583144}
   - component: {fileID: 2120729903258933953}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3420,7 +3417,7 @@ GameObject:
   - component: {fileID: 5721692547524368442}
   - component: {fileID: 2625524054437202786}
   - component: {fileID: 8513436252294445724}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4272,7 +4269,7 @@ GameObject:
   - component: {fileID: 1549972341376166120}
   - component: {fileID: 5637545735541034517}
   - component: {fileID: 4228815563719345548}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
