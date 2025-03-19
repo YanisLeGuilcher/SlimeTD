@@ -44,7 +44,6 @@ namespace Script.Manager
         [SerializeField] private RectTransform placementChoice;
 
         [Header("Data")] 
-        [SerializeField] private LayerMask layerAllow;
         [SerializeField] private LayerMask layerBlock;
         [SerializeField] private int startMoney = 400;
         [SerializeField] private float moneyEarnByWave = 100;
@@ -112,7 +111,7 @@ namespace Script.Manager
             }
             if (Input.GetMouseButtonDown(0))
             {
-                if (EventSystem.current.IsPointerOverGameObject())
+                if (EventSystem.current.IsPointerOverUIExcludingSortingLayer(LayerMask.NameToLayer("UiIgnore")))
                     return;
 
                 if (ChoicePlacementDisplayed)
@@ -124,8 +123,8 @@ namespace Script.Manager
                 OnClick.Invoke(this);
                 
                 Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, layerBlock);
-                if (layerAllow.Contains(hit.collider.gameObject.layer))
+                var hit = Physics2D.OverlapCircle(mousePosition, 0.85f, layerBlock);
+                if (!hit)
                 {
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(
                         transform as RectTransform,
