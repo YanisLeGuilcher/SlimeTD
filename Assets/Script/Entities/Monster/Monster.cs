@@ -48,6 +48,8 @@ namespace Script.Entities.Monster
         private readonly int deathHash = Animator.StringToHash("Death");
         private readonly int hurtHash = Animator.StringToHash("Hurt");
 
+        private float randomSpeed;
+
         public int LifePoint { get; private set; }
 
         private float currentSpeed;
@@ -60,6 +62,7 @@ namespace Script.Entities.Monster
                     .First(clip => clip.name == "Death").length,
                 animator
             );
+            randomSpeed = speed * Random.Range(0.9f,1.1f);
         }
 
         protected virtual void Start()
@@ -97,7 +100,7 @@ namespace Script.Entities.Monster
                 animator.speed = LevelManager.Speed;
             }
             
-            Progress += speed / SplineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
+            Progress += randomSpeed / SplineContainer.Spline.GetLength() * LevelManager.FixedDeltaTime;
             if (Progress >= 1)
                 Finish.Invoke();
             else
