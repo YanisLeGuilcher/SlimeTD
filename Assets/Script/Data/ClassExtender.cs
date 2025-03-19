@@ -66,29 +66,26 @@ namespace Script.Data
             }).FirstInPosition();
         }
         
-        public static Monster Spawner(this IEnumerable<Monster> entities)
+        public static Monster Spawner(this List<Monster> entities)
         {
-            Monster target = null;
-            bool withSpawner = false;
-            foreach (var entity in entities)
+            var splitList = entities.Split(monster => monster is MonsterSpawner);
+
+            return splitList.Item1.Any() ? splitList.Item1.FirstInPosition() : splitList.Item2.FirstInPosition();
+        }
+        
+        public static (List<T>,List<T>) Split<T>(this List<T> list, Func<T,bool> predicate)
+        {
+            List<T> part1 = new();
+            List<T> part2 = new();
+            foreach (var element in list)
             {
-                if (entity is MonsterSpawner)
-                {
-                    withSpawner = true;
-                    if (target && target.Progress < entity.Progress)
-                        target = entity;
-                    else
-                        target = entity;
-                }
-                else if (!withSpawner)
-                {
-                    if (target && target.Progress < entity.Progress)
-                        target = entity;
-                    else
-                        target = entity;
-                }
+                if(predicate(element))
+                    part1.Add(element);
+                else
+                    part2.Add(element);
             }
-            return target;
+
+            return (part1, part2);
         }
         
         public static Monster LastInPosition(this IEnumerable<Monster> entities) =>
