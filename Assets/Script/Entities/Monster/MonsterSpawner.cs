@@ -23,9 +23,9 @@ namespace Script.Entities.Monster
             base.Start();
             
 
-            RuntimeAnimatorController controller = animator.runtimeAnimatorController;
+            var controller = animator.runtimeAnimatorController;
 
-            foreach (AnimationClip clip in controller.animationClips)
+            foreach (var clip in controller.animationClips)
             {
                 if (Animator.StringToHash(clip.name) != summonHash)
                     continue;

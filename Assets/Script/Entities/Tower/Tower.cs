@@ -26,13 +26,12 @@ namespace Script.Entities.Tower
         [SerializeField] private TowerType towerType;
 
         protected readonly Dictionary<Bonus, List<float>> Bonus = new();
-
-
+        
         public readonly UnityEvent OnSell = new();
 
         public float Range => range * Bonus[Data.Enum.Bonus.Range].Last();
 
-        public int PriceOnSell => (int)(DataSerializer.GetPriceOfTower(towerType) * .7f);
+        public int PriceOnSell => DataSerializer.GetSellPriceOfTower(towerType);
 
         private void Awake()
         {
