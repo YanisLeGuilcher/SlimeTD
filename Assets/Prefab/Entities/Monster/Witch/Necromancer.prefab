@@ -156,11 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260621192239a0340b70808bfe1739d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 5
+  life: 10
   damageOnPass: 10
   moneyEarn: 30
   speed: 0.9
-  rank: 10
   weaknessTolerance: []
   dropOnDeath: 
   animator: {fileID: 5988255605515244686}
