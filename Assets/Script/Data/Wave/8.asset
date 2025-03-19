@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveParts:
   - numberOfMonster: 10
-    monster: {fileID: 806499008877946067, guid: 734754f381fda9d4e85b6e3d10692727,
+    monster: {fileID: 8424082848898548215, guid: e67833c10e956d7488792e995cfea797,
       type: 3}
     timeBetweenMonster: 1
+  isInfiniteWave: 0

@@ -22,10 +22,11 @@ MonoBehaviour:
       type: 3}
     timeBetweenMonster: 1
   - numberOfMonster: 15
-    monster: {fileID: 8424082848898548215, guid: 9fedc77047b44ac45bcd0900a7e108ad,
+    monster: {fileID: 806499008877946067, guid: fb0b4a0577889214ebd8c8ae66addf2a,
       type: 3}
     timeBetweenMonster: 1
   - numberOfMonster: 10
     monster: {fileID: 6777909432648081452, guid: ad5bfc44784cc4843aefa34319e8ca65,
       type: 3}
     timeBetweenMonster: 1
+  isInfiniteWave: 0

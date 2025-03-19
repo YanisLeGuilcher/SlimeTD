@@ -21,3 +21,8 @@ MonoBehaviour:
     monster: {fileID: 8424082848898548215, guid: 38c3ea8e52fb032449f6dc9d628c4ee7,
       type: 3}
     timeBetweenMonster: 1
+  - numberOfMonster: 10
+    monster: {fileID: 8424082848898548215, guid: 95745308caba57a42b704ebdca415452,
+      type: 3}
+    timeBetweenMonster: 1
+  isInfiniteWave: 0
