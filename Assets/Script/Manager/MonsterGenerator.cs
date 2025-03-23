@@ -29,7 +29,7 @@ namespace Script.Manager
 
         #endregion
         
-        public int CurrentWave { get; private set; } = 1;
+        public int CurrentWave { get; set; } = 1;
         
         #region Event
 

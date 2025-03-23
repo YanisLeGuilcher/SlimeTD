@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Script.Data;
 using Script.Data.Enum;
 using Script.Entities.Monster;
@@ -48,6 +49,7 @@ namespace Script.Manager
         [SerializeField] private int startMoney = 400;
         [SerializeField] private float moneyEarnByWave = 100;
         [SerializeField] private float moneyEarnByWaveFactor = .01f;
+        [SerializeField] private Level level;
 
         #endregion
 
@@ -59,9 +61,12 @@ namespace Script.Manager
         
         private Camera mainCamera;
 
-        private bool 
+        private bool
             waveProcessing,
-            paused;
+            paused,
+            dontShowPlacementChoice;
+
+        private readonly List<TowerData> towersData = new();
 
         #endregion
         
@@ -79,13 +84,14 @@ namespace Script.Manager
             currentMoney = startMoney;
 
             Instance = this;
-            lifePoint.text = currentLifePoint.ToString();
-            money.text = currentMoney.ToString();
             UpdateWaveCount();
+            UpdateLifePoint();
+            UpdateMoney();
             
             monsterGenerator.OnMonsterDie.AddListener(MonsterDie);
             monsterGenerator.OnMonsterFinish.AddListener(MonsterFinish);
             monsterGenerator.OnWaveFinish.AddListener(WaveFinish);
+            OnClick.AddListener(CatchOverClick);
         }
 
         private void OnDestroy()
@@ -100,6 +106,25 @@ namespace Script.Manager
             mainCamera = Camera.main;
             if(mainCamera == null)
                 Debug.LogWarning("No camera found");
+
+            if (!SaveManager.LevelUseSave(level))
+                Save();
+            else
+            {
+                LevelData data = SaveManager.GetSave(level);
+
+                currentLifePoint = data.lifePoint;
+                currentMoney = data.money;
+                monsterGenerator.CurrentWave = data.waveCount;
+            
+                UpdateWaveCount();
+                UpdateLifePoint();
+                UpdateMoney();
+            
+                foreach (var tower in data.towers)
+                    SpawnTower(tower.type, tower.position, true);
+            }
+            
         }
 
         private void Update()
@@ -137,6 +162,8 @@ namespace Script.Manager
                 else
                     ShowChoiceOfPlacement(false);
             }
+
+            dontShowPlacementChoice = false;
         }
 
         #endregion
@@ -153,21 +180,29 @@ namespace Script.Manager
 
         private void ShowChoiceOfPlacement(bool enable = true)
         {
+            if(enable && dontShowPlacementChoice)
+                return;
             if(placementChoice.gameObject.activeSelf != enable)
                 placementChoice.gameObject.SetActive(enable);
         }
         
-        public void SpawnTower(TowerType type, Vector3 position)
+        public void SpawnTower(TowerType type, Vector3 position, bool skipPrice = false)
         {
-            int price = DataSerializer.GetPriceOfTower(type);
-            if(currentMoney < price)
-                return;
+            if (!skipPrice)
+            {
+                int price = DataSerializer.GetPriceOfTower(type);
+                if(currentMoney < price)
+                    return;
             
-            currentMoney -= price;
-            money.text = currentMoney.ToString();
+                currentMoney -= price;
+                money.text = currentMoney.ToString();
+            }
+            
             
             Instantiate(PrefabFactory.Instance[type], position, Quaternion.identity);
             placementChoice.gameObject.SetActive(false);
+            
+            towersData.Add(new TowerData {position = position, type = type});
         }
 
         public void UpgradeTower(Tower oldOne, TowerType newOne)
@@ -205,6 +240,8 @@ namespace Script.Manager
             startWave.SetActive(false);
             selectSpeed.SetActive(true);
             waveProcessing = true;
+            
+            Save();
         }
 
         public void SetSpeed(int amount) => cacheSpeed = amount;
@@ -226,14 +263,32 @@ namespace Script.Manager
             }
         }
 
-        public void Retry() => SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        public void Retry()
+        {
+            SaveManager.DeleteSave(level);
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
 
 
-        public void GoToMainMenu() => SceneManager.LoadSceneAsync(0);
+        public void GoToMainMenu()
+        {
+            if (!waveProcessing)
+                Save();
+            SceneManager.LoadSceneAsync(0);
+        }
 
         #endregion
+
+        private void CatchOverClick(MonoBehaviour clicker)
+        {
+            if(clicker == this)
+                return;
+            ShowChoiceOfPlacement(false);
+        }
         
         public void UpdateWaveCount() => waveCount.text = monsterGenerator.CurrentWave.ToString();
+        public void UpdateMoney() => money.text = currentMoney.ToString();
+        public void UpdateLifePoint() => lifePoint.text = currentLifePoint.ToString();
         
         private void MonsterDie(Monster monster)
         {
@@ -253,6 +308,14 @@ namespace Script.Manager
             }
             lifePoint.text = currentLifePoint.ToString();
         }
+
+
+        public void DontShowPlacementChoice()
+        {
+            dontShowPlacementChoice = true;
+            if(placementChoice.gameObject.activeSelf)
+                placementChoice.gameObject.SetActive(false);
+        }
         
         private void WaveFinish()
         {
@@ -265,6 +328,8 @@ namespace Script.Manager
             selectSpeed.SetActive(false);
             currentMoney += (int)(moneyEarnByWave * (moneyEarnByWaveFactor * monsterGenerator.CurrentWave + 1));
             money.text = currentMoney.ToString();
+            
+            Save();
         }
 
         public static IEnumerator WaitForSecond(float seconds)
@@ -277,6 +342,17 @@ namespace Script.Manager
             }
         }
 
+        private void Save()
+        {
+            SaveManager.SaveLevel(level,
+                new LevelData
+                {
+                    lifePoint = currentLifePoint,
+                    money = currentMoney,
+                    waveCount = monsterGenerator.CurrentWave,
+                    towers = towersData
+                });
+        }
         
     }
 }

@@ -99,6 +99,9 @@ namespace Script.Entities.Tower
         {
             if (clicker == this || !upgradePanel)
                 return;
+
+            if (upgradePanel.activeSelf)
+                LevelManager.Instance.DontShowPlacementChoice();
             
             upgradePanel.SetActive(false);
             rangePreview.enabled = false;

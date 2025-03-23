@@ -84346,6 +84346,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3099284682043944796, guid: 708ae532811a81242bff2c5d4c6d4def,
         type: 3}
+      propertyPath: level
+      value: 
+      objectReference: {fileID: 11400000, guid: 75a761bc30cb87a448eda500ebab0c4c,
+        type: 2}
+    - target: {fileID: 3099284682043944796, guid: 708ae532811a81242bff2c5d4c6d4def,
+        type: 3}
       propertyPath: monsterGenerator
       value: 
       objectReference: {fileID: 709821416702423442}
