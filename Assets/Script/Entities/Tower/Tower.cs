@@ -33,6 +33,8 @@ namespace Script.Entities.Tower
 
         public int PriceOnSell => DataSerializer.GetSellPriceOfTower(towerType);
 
+        public TowerType Type => towerType;
+
         private void Awake()
         {
             ClearBoost();

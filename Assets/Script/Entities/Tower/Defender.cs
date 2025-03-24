@@ -35,9 +35,19 @@ namespace Script.Entities.Tower
 
         private Monster.Monster target;
 
-        public int Damage => (int)(damage * Bonus[Data.Enum.Bonus.Damage].Last());
-        public float FireRate => fireRate * Bonus[Data.Enum.Bonus.FireRate].Last();
-        public float RotationSpeed => rotationSpeed * Bonus[Data.Enum.Bonus.RotationSpeed].Last();
+        private int Damage => (int)(damage * Bonus[Data.Enum.Bonus.Damage].Last());
+        private float FireRate => fireRate * Bonus[Data.Enum.Bonus.FireRate].Last();
+        private float RotationSpeed => rotationSpeed * Bonus[Data.Enum.Bonus.RotationSpeed].Last();
+
+        public AttackStyle AttackStyle
+        {
+            get => attackStyle;
+            set
+            {
+                attackStyle = value;
+                attackStyleText.text = attackStyle.ToString();
+            }
+        }
 
 
         
@@ -108,11 +118,7 @@ namespace Script.Entities.Tower
             target = SearchTarget();
         }
 
-        public void SwitchAttackStyle()
-        {
-            attackStyle = attackStyle.Next();
-            attackStyleText.text = attackStyle.ToString();
-        }
+        public void SwitchAttackStyle() => AttackStyle = attackStyle.Next();
 
         private bool IsLookingAtTarget()
         {
@@ -179,6 +185,7 @@ namespace Script.Entities.Tower
             yield return LevelManager.WaitForSecond(time);
             monster.TakeDamage(new Damage {Amount = Damage, Type = damageType});
         }
-        
+
+        public void SetAttackStyle(AttackStyle newAttackStyle) => attackStyle = newAttackStyle;
     }
 }

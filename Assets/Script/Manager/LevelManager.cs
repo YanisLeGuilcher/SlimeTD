@@ -66,7 +66,7 @@ namespace Script.Manager
             paused,
             dontShowPlacementChoice;
 
-        private readonly List<TowerData> towersData = new();
+        private readonly List<Tower> towers = new();
 
         #endregion
         
@@ -122,7 +122,7 @@ namespace Script.Manager
                 UpdateMoney();
             
                 foreach (var tower in data.towers)
-                    SpawnTower(tower.type, tower.position, true);
+                    SpawnTower(tower.type, tower.position, tower.attackStyle, true);
             }
             
         }
@@ -186,7 +186,7 @@ namespace Script.Manager
                 placementChoice.gameObject.SetActive(enable);
         }
         
-        public void SpawnTower(TowerType type, Vector3 position, bool skipPrice = false)
+        public void SpawnTower(TowerType type, Vector3 position, AttackStyle attackStyle = AttackStyle.First, bool skipPrice = false)
         {
             if (!skipPrice)
             {
@@ -199,10 +199,19 @@ namespace Script.Manager
             }
             
             
-            Instantiate(PrefabFactory.Instance[type], position, Quaternion.identity);
+            var go = Instantiate(PrefabFactory.Instance[type], position, Quaternion.identity);
             placementChoice.gameObject.SetActive(false);
+
+            if (!Tower.Towers.TryGetValue(go, out var script))
+            {
+                Debug.LogWarning($"Can't find script for {go.name}");
+                return;
+            }
             
-            towersData.Add(new TowerData {position = position, type = type});
+            towers.Add(script);
+
+            if (script is Defender defender)
+                defender.SetAttackStyle(attackStyle);
         }
 
         public void UpgradeTower(Tower oldOne, TowerType newOne)
@@ -350,7 +359,7 @@ namespace Script.Manager
                     lifePoint = currentLifePoint,
                     money = currentMoney,
                     waveCount = monsterGenerator.CurrentWave,
-                    towers = towersData
+                    towers = towers.ToData()
                 });
         }
         

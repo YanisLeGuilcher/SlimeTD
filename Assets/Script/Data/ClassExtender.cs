@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Text;
 using Script.Entities.Monster;
+using Script.Entities.Tower;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -131,8 +134,66 @@ namespace Script.Data
             
             return false;
         }
+        
+        private const string Charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.\n\r\0 ";
+        private static readonly int BaseSize = Charset.Length;
 
+        public static byte[] ToBase38(this string str)
+        {
+            BigInteger value = 0;
 
+            foreach (char c in str)
+            {
+                int index = Charset.IndexOf(c);
+                if (index == -1) 
+                    throw new FormatException($"Caractère {c} invalide dans l'encodage.");
+                value = value * BaseSize + index;
+            }
+            return value.ToByteArray().Reverse().ToArray();
+        }
+        
+        
+        public static string FromBase38(this byte[] bytes)
+        {
+            BigInteger value = new BigInteger(bytes.Reverse().ToArray());
+            StringBuilder result = new StringBuilder();
+            
+            while (value > 0)
+            {
+                int remainder = (int)(value % BaseSize);
+                result.Insert(0, Charset[remainder]);
+                value /= BaseSize;
+            }
+
+            return result.Length > 0 ? result.ToString() : Charset[0].ToString();
+        }
+
+        public static List<TowerData> ToData(this List<Tower> towers)
+        {
+            List<TowerData> data= new();
+
+            foreach (var tower in towers)
+            {
+                if (tower is Defender defender)
+                {
+                    data.Add(new TowerData
+                    {
+                        attackStyle = defender.AttackStyle,
+                        type = defender.Type,
+                        position = defender.transform.position
+                    });
+                }
+                else
+                {
+                    data.Add(new TowerData
+                    {
+                        type = tower.Type,
+                        position = tower.transform.position
+                    });
+                }
+            }
+            return data;
+        }
     }
 }
 

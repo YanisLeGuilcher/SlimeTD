@@ -35,7 +35,7 @@ namespace Script.Data
             var dataPath = Application.dataPath + "/../Levels/" + level.name;
             if(File.Exists(dataPath))
                 File.Delete(dataPath);
-            File.WriteAllText(dataPath, ToString());
+            File.WriteAllBytes(dataPath, ToString().ToBase38());
         }
 
         public static LevelData LoadData(Level level)
@@ -43,7 +43,7 @@ namespace Script.Data
             LevelData data = new();
             var dataPath = Application.dataPath + "/../Levels/" + level.name;
 
-            string content = File.ReadAllText(dataPath);
+            string content = File.ReadAllBytes(dataPath).FromBase38();
             
             var lines = content.Split("\n");
 

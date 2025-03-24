@@ -20,9 +20,7 @@ namespace Script.Data
                 Destroy(this);
                 return;
             }
-
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         public static List<Level> Levels => instance.levels;
