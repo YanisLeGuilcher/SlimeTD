@@ -3,3 +3,6 @@ C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/CMak
 C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/GameActivity/CMakeFiles/game.dir
 C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
 C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
+C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Users/yanis/UnityProject/SlimeTD/.utmp/RelWithDebInfo/5gs3054n/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

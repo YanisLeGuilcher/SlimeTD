@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UnityEngine;
+using Script.Manager;
 
 namespace Script.Data
 {
@@ -32,7 +32,7 @@ namespace Script.Data
         
         public void Save(Level level) 
         {
-            var dataPath = Application.dataPath + "/../Levels/" + level.name;
+            var dataPath = SaveManager.DataPath + "Levels/" + level.name;
             if(File.Exists(dataPath))
                 File.Delete(dataPath);
             File.WriteAllBytes(dataPath, ToString().ToBase38());
@@ -41,7 +41,7 @@ namespace Script.Data
         public static LevelData LoadData(Level level)
         {
             LevelData data = new();
-            var dataPath = Application.dataPath + "/../Levels/" + level.name;
+            var dataPath = SaveManager.DataPath + "Levels/" + level.name;
 
             string content = File.ReadAllBytes(dataPath).FromBase38();
             
