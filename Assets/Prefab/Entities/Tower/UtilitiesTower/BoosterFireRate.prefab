@@ -565,14 +565,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 4
+  towerType: 5
   rigidBody: {fileID: 5525853940573244160}
   towerCollider: {fileID: 5802426406105090798}
   rangeCollider: {fileID: 6190318266429588734}
   rangePreview: {fileID: 2922483160457500784}
-  sellCost: {fileID: 9089782545356959839}
   upgradeCanvas: {fileID: 5804379966379855572}
   upgradePanel: {fileID: 372480803152114656}
-  towerType: 5
+  costOfUpgrades:
+  - first: 6
+    second: {fileID: 1291082999124143037}
+  sellCost: {fileID: 9089782545356959839}
   bonus:
   - first: 2
     second: 1.5

@@ -68,7 +68,7 @@ namespace Script.Entities.Tower
             
             if (!target)
                 return;
-            if (target.Dead)
+            if (target.WillDie)
             {
                 monsterInRange.Remove(target);
                 target = SearchTarget();
@@ -144,6 +144,7 @@ namespace Script.Entities.Tower
 
         private Monster.Monster SearchTarget()
         {
+            monsterInRange.RemoveAll(monster => monster.WillDie);
             if (monsterInRange.Count > 0)
             {
                 return attackStyle switch
@@ -161,29 +162,31 @@ namespace Script.Entities.Tower
 
         private void Attack()
         {
-            if(target.Dead)
+            if (target.WillDie)
                 return;
             if (shootEffectPrefab)
             {
                 var go = LeanPool.Spawn(shootEffectPrefab);
                 if (ShootEffect.ShootEffects.TryGetValue(go, out var script))
                 {
+                    var newDamage = new Damage { Amount = Damage, Type = damageType };
                     script.SetTrajectory(transform.position, target.transform.position);
-                    StartCoroutine(TakeDamageAfterTime(script.TimeTravel, target));
+                    target.TakePreviousDamage(newDamage);
+                    StartCoroutine(TakeDamageAfterTime(script.TimeTravel, target, newDamage));
                 }
                 else
                     Debug.LogWarning($"ShootEffect script for {go.name} not found");
             }
             else
-                target.TakeDamage(new Damage {Amount = Damage, Type = damageType});
+                target.TakeDamage(new Damage {Amount = Damage, Type = damageType}, true);
             
             reload = 1 / FireRate;
         }
 
-        private IEnumerator TakeDamageAfterTime(float time, Monster.Monster monster)
+        private IEnumerator TakeDamageAfterTime(float time, Monster.Monster monster, Damage newDamage)
         {
             yield return LevelManager.WaitForSecond(time);
-            monster.TakeDamage(new Damage {Amount = Damage, Type = damageType});
+            monster.TakeDamage(newDamage);
         }
 
         public void SetAttackStyle(AttackStyle newAttackStyle) => attackStyle = newAttackStyle;

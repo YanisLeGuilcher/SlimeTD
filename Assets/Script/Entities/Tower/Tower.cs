@@ -14,16 +14,21 @@ namespace Script.Entities.Tower
     {
         public static readonly Dictionary<GameObject, Tower> Towers = new();
         
-        
+        [Header("Stats")]
         [SerializeField] private float range;
+        [SerializeField] private TowerType towerType;
+
+        [Header("Other script")]
         [SerializeField] private Rigidbody2D rigidBody;
         [SerializeField] private CircleCollider2D towerCollider;
         [SerializeField] private CircleCollider2D rangeCollider;
         [SerializeField] private SpriteRenderer rangePreview;
-        [SerializeField] private TMP_Text sellCost;
+        
+        [Header("Upgrade")]
         [SerializeField] private Canvas upgradeCanvas;
         [SerializeField] private GameObject upgradePanel;
-        [SerializeField] private TowerType towerType;
+        [SerializeField] private List<Data.Tuple<TowerType,TMP_Text>> costOfUpgrades;
+        [SerializeField] private TMP_Text sellCost;
 
         protected readonly Dictionary<Bonus, List<float>> Bonus = new();
         
@@ -52,6 +57,9 @@ namespace Script.Entities.Tower
             RangeChange();
             
             sellCost.text = PriceOnSell.ToString();
+
+            foreach (var costUpgrade in costOfUpgrades)
+                costUpgrade.second.text = DataSerializer.GetPriceOfTower(costUpgrade.first).ToString();
             
             LevelManager.OnClick.AddListener(CatchOtherClick);
             Booster.ClearBoost.AddListener(ClearBoost);

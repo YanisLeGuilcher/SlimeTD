@@ -991,12 +991,18 @@ MonoBehaviour:
   startWave: {fileID: 8694028305500093234}
   selectSpeed: {fileID: 5428637399946457445}
   placementChoice: {fileID: 6946248760099276148}
+  towersCanBePlace:
+  - first: 0
+    second: {fileID: 8176334525899625642}
+  - first: 3
+    second: {fileID: 403285924901338318}
   layerBlock:
     serializedVersion: 2
     m_Bits: 1536
   startMoney: 400
   moneyEarnByWave: 100
   moneyEarnByWaveFactor: 0.01
+  level: {fileID: 0}
 --- !u!1 &2981479806228243236
 GameObject:
   m_ObjectHideFlags: 0

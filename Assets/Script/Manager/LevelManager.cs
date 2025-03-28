@@ -43,6 +43,7 @@ namespace Script.Manager
         [SerializeField] private GameObject startWave;
         [SerializeField] private GameObject selectSpeed;
         [SerializeField] private RectTransform placementChoice;
+        [SerializeField] private List<Tuple<TowerType, TMP_Text>> towersCanBePlace = new();
 
         [Header("Data")] 
         [SerializeField] private LayerMask layerBlock;
@@ -124,7 +125,9 @@ namespace Script.Manager
                 foreach (var tower in data.towers)
                     SpawnTower(tower.type, tower.position, tower.attackStyle, true);
             }
-            
+
+            foreach (var tower in towersCanBePlace)
+                tower.second.text = DataSerializer.GetPriceOfTower(tower.first).ToString();
         }
 
         private void Update()
@@ -223,7 +226,14 @@ namespace Script.Manager
             currentMoney -= price;
             money.text = currentMoney.ToString();
             
-            Instantiate(PrefabFactory.Instance[newOne], oldOne.transform.position, Quaternion.identity);
+            var newTower = Instantiate(PrefabFactory.Instance[newOne], oldOne.transform.position, Quaternion.identity);
+
+            towers.Remove(oldOne);
+            
+            if(Tower.Towers.TryGetValue(newTower, out var script))
+                towers.Add(script);
+            else
+                Debug.LogWarning($"Can not found script of {newTower.name}");
             
             Destroy(oldOne.gameObject);
         }
@@ -232,6 +242,8 @@ namespace Script.Manager
         {
             currentMoney += defender.PriceOnSell;
             money.text = Instance.currentMoney.ToString();
+
+            towers.Remove(defender);
             
             Destroy(defender.gameObject);
         }

@@ -288,15 +288,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 6
+  towerType: 2
   rigidBody: {fileID: 5525853940573244160}
   towerCollider: {fileID: -4708387432474508275}
   rangeCollider: {fileID: 7309048618033034463}
   rangePreview: {fileID: 2922483160457500784}
-  sellCost: {fileID: 6342904831249552061}
   upgradeCanvas: {fileID: 189066271260227461}
   upgradePanel: {fileID: 6235526540023565698}
-  towerType: 2
-  damage: 20
+  costOfUpgrades: []
+  sellCost: {fileID: 6342904831249552061}
+  damage: 8
   fireRate: 0.4
   rotationSpeed: 2
   damageType: 3

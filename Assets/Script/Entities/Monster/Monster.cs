@@ -38,6 +38,9 @@ namespace Script.Entities.Monster
         public int Money => moneyEarn;
         public bool Dead => LifePoint <= 0;
         public bool Alive => LifePoint > 0;
+        
+        public bool WillDie => PreviousLifePoint <= 0;
+        public bool WillLive => PreviousLifePoint > 0;
 
 
         private ValueCalculator<float, Animator> deathAnimationTime;
@@ -51,6 +54,7 @@ namespace Script.Entities.Monster
         private float randomSpeed;
 
         public int LifePoint { get; private set; }
+        public int PreviousLifePoint { get; private set; }
 
         private float currentSpeed;
 
@@ -79,6 +83,7 @@ namespace Script.Entities.Monster
         private void OnEnable()
         {
             LifePoint = life;
+            PreviousLifePoint = life;
             Die.RemoveAllListeners();
             Finish.RemoveAllListeners();
         }
@@ -115,9 +120,21 @@ namespace Script.Entities.Monster
             
         }
 
+        public void TakePreviousDamage(Damage damage)
+        {
+            if(Dead)
+                return;
+            
+            var weak = weaknessTolerance.GetTupleOrDefault(damage.Type, 1);
+ 
+            damage.Amount = (int)(damage.Amount * weak);
+
+            PreviousLifePoint -= damage.Amount;
+        }
+
         
         
-        public void TakeDamage(Damage damage)
+        public void TakeDamage(Damage damage, bool isInstantDamage = false)
         {
             if(Dead)
                 return;
@@ -135,6 +152,9 @@ namespace Script.Entities.Monster
             ShowDamage(damageRank, new BigInteger(damage.Amount));
 
             LifePoint -= damage.Amount;
+            if(isInstantDamage)
+                TakePreviousDamage(damage);
+            
             if (Dead)
                 Death();
             else
